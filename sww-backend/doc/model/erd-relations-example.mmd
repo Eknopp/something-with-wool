@@ -1,0 +1,23 @@
+erDiagram
+
+    USER ||--o{ ORGANISM : works_at
+    USER |o--|| ROLE : has
+    ORGANISM ||--o{ INSTRUMENT-LIST : manages
+    INSTRUMENT-LIST |o--|| ORGANISM: published
+    INSTRUMENT-LIST |o--|| ORGANISM: draft
+    INSTRUMENT-LIST ||--|{ LIST-SECTION : has
+    LIST-SECTION ||--o{ INSTRUMENT : consists_of
+    USER ||--o{ INSTRUMENT-OWNERSHIP : has
+    INSTRUMENT ||--o{ INSTRUMENT-OWNERSHIP : assigned_to
+    USER ||--o{ LIST-OWNERSHIP : has
+    LIST-SECTION ||--o{ LIST-OWNERSHIP : managed_by
+    INSTRUMENT ||--o{ INSTRUMENT-RELATION : parent
+    INSTRUMENT ||--o{ INSTRUMENT-RELATION : child
+    INSTRUMENT }o--o{ LEGISLATION : applicable_for
+    INSTRUMENT }o--o{ NACE-CATEGORY : has
+    NACE-CATEGORY ||--o{ NACE-CATEGORY : parent
+    INSTRUMENT }o--o{ PACKAGE : part_of
+    INSTRUMENT ||--o{ METADATA-VALUE : has
+    METADATA-OPTION ||--o{ METADATA-NAME : has_value_options
+    METADATA-VALUE ||--o{ METADATA-OPTION : selected_value
+    METADATA-VALUE ||--o{ METADATA-NAME : value_for
