@@ -1,0 +1,27 @@
+#version: '3.7'
+services:
+  db:
+    image: 'postgres:latest'
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      # - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: postgres
+
+  rails:
+    build:
+      context: ./sww-backend
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./sww-backend:/app
+      - bundle-api:/usr/local/bundle
+    depends_on:
+      - db
+
+volumes:
+  postgres:
+  bundle-api:
