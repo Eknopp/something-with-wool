@@ -15,13 +15,31 @@ services:
       context: ./sww-backend
       dockerfile: Dockerfile
     ports:
-      - '3000:3000'
+      - '3001:3001'
     volumes:
       - ./sww-backend:/app
       - bundle-api:/usr/local/bundle
     depends_on:
       - db
 
+  frontend:
+    build:
+      context: ./sww-frontend
+      dockerfile: Dockerfile
+    image: node:23-alpine
+    volumes:
+      - ./sww-frontend:/client
+      - sww-npm-cache:/root/.npm
+      - sww-npm-node-modules:/client/node_modules
+    working_dir: /client
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+    tty: true
+
 volumes:
   postgres:
   bundle-api:
+  sww-npm-cache:
+  sww-npm-node-modules:

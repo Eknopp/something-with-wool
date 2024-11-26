@@ -15,9 +15,8 @@ RUN bundle install
 
 ADD . /app
 
-ARG DEFAULT_PORT 3000
-
 EXPOSE ${DEFAULT_PORT}
 
 # TODO: set puma as the default server
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD\
+   ./bin/rails server -b 0.0.0.0 -p 3001
