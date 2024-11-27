@@ -17,6 +17,11 @@ ADD . /app
 
 EXPOSE ${DEFAULT_PORT}
 
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+
 # TODO: set puma as the default server
 CMD\
-   ./bin/rails server -b 0.0.0.0 -p 3001
+   ./bin/rails server -b 0.0.0.0 -p 3001 
+

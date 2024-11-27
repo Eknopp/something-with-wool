@@ -22,13 +22,13 @@ services:
     depends_on:
       - db
 
-  frontend:
+  react:
     build:
-      context: ./sww-frontend
-      dockerfile: Dockerfile
+      context: ./
     image: node:23-alpine
     volumes:
       - ./sww-frontend:/client
+      - ./sww-frontend/docker/start-dev.sh:/client/start-dev.sh
       - sww-npm-cache:/root/.npm
       - sww-npm-node-modules:/client/node_modules
     working_dir: /client
@@ -37,6 +37,7 @@ services:
     environment:
       - NODE_ENV=development
     tty: true
+    entrypoint: ./docker/start-dev.sh
 
 volumes:
   postgres:
