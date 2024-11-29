@@ -28,7 +28,7 @@ services:
     image: node:23-alpine
     volumes:
       - ./sww-frontend:/client
-      - ./sww-frontend/docker/start-dev.sh:/client/start-dev.sh
+      - ./docker/react/start-dev.sh:/client/start-dev.sh
       - sww-npm-cache:/root/.npm
       - sww-npm-node-modules:/client/node_modules
     working_dir: /client
@@ -37,7 +37,7 @@ services:
     environment:
       - NODE_ENV=development
     tty: true
-    entrypoint: ./docker/start-dev.sh
+    entrypoint: ./start-dev.sh
 
 volumes:
   postgres:
