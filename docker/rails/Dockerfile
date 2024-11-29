@@ -11,17 +11,10 @@ RUN gem install bundler
 
 COPY Gemfile* ./
 
-RUN bundle install
-
-ADD . /app
-
 EXPOSE ${DEFAULT_PORT}
-
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
 
 # TODO: set puma as the default server
 CMD\
-   ./bin/rails server -b 0.0.0.0 -p 3001 
-
+   bundle install && \
+   rm -f /app/tmp/pids/server.pid && \
+   ./bin/rails server -b 0.0.0.0 -p 3001 \

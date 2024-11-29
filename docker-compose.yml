@@ -12,7 +12,7 @@ services:
 
   rails:
     build:
-      context: ./sww-backend
+      context: ./docker/rails
       dockerfile: Dockerfile
     ports:
       - '3001:3001'
@@ -29,8 +29,8 @@ services:
     volumes:
       - ./sww-frontend:/client
       - ./docker/react/start-dev.sh:/client/start-dev.sh
-      - sww-npm-cache:/root/.npm
       - sww-npm-node-modules:/client/node_modules
+      # - sww-npm-cache:/root/.npm
     working_dir: /client
     ports:
       - '3000:3000'
