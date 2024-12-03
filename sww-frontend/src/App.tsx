@@ -1,5 +1,10 @@
+import { useAuth } from './hooks/use-auth';
+import Home from './pages/home/Home';
+import LogIn from './pages/logIn/LogIn';
+
 function App() {
-  return <h1 className="text-4x1 text-blue-500 mt-10">Vite Project</h1>;
+  const { isAuthenticated } = useAuth();
+  return <div>{isAuthenticated ? <Home /> : <LogIn />}</div>;
 }
 
 export default App;

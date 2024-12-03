@@ -8,7 +8,13 @@ class Api::V1::SessionsController < ApplicationController
   def create
     if user = User.authenticate_by(params.permit(:email_address, :password))
       start_new_session_for user
-      render json: { data: { token: Current.session.token  } }
+      # TODO: refactor to use a serializer
+      render json: {
+        id: user.id,
+        email_address: user.email_address,
+        username: user.username,
+        token: Current.session.token
+      }
     else
       render json: {}, status: :unauthorized
     end
