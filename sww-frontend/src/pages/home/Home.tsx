@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Logout from '../../components/logout/Logout';
 
 const Home = () => {
   return (
@@ -17,6 +18,11 @@ const Home = () => {
           <Link className="text-blue-500 hover:text-blue-700" to="/login">
             Log In
           </Link>
+        </p>
+      </div>
+      <div>
+        <p>
+          Logout: <Logout />
         </p>
       </div>
     </div>
