@@ -1,6 +1,6 @@
 import React from 'react';
-import { useAuth } from '../hooks/use-auth';
-import LogIn from '../pages/logIn/LogIn';
+import { useAuth } from '../../hooks/useAuth';
+import Login from '../../pages/login/Login';
 
 interface Props<P extends object> {
   component: React.ComponentType<P>; // Component accepts props of type P
@@ -15,7 +15,7 @@ const ProtectedRoutes = <P extends object>({
   console.log('isAuthenticated: ', isAuthenticated);
 
   if (!isAuthenticated) {
-    return <LogIn />;
+    return <Login />;
   }
 
   return <Component {...(componentProps || ({} as P))} />;

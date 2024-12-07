@@ -1,29 +1,15 @@
 import { useEffect } from 'react';
-import { useAppDispatch } from './hooks/redux-hooks';
-import { useAuth } from './hooks/use-auth';
-import { setAuthUser } from './redux/authUser/authUser.slice';
 import { RouterProvider } from 'react-router-dom';
+import { useAuth } from './hooks/useAuth';
 import { router } from './router';
+import checkAuthUser from './utils/auth/checkAuthUser';
 
 function App() {
-  const dispatch = useAppDispatch();
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    const loggedInUser = localStorage.getItem('user');
-    if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser);
-      // TODO: refactor this to a separate file
-      dispatch(
-        setAuthUser({
-          id: foundUser.id.toString(),
-          email: foundUser.email_address,
-          username: foundUser.username,
-          token: foundUser.token,
-        })
-      );
-    }
-  }, [isAuthenticated, dispatch]);
+    checkAuthUser();
+  }, [isAuthenticated]);
 
   return (
     <div>

@@ -1,11 +1,12 @@
-import { createBrowserRouter, Outlet } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
+import AppLayout from './components/layout/AppLayout';
 import Home from './pages/home/Home';
-import ProtectedRoutes from './utils/ProtectedRoutes';
+import ProtectedRoutes from './utils/auth/ProtectedRoutes';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <LayoutComponent />,
+    element: <AppLayout />,
     children: [
       {
         index: true,
@@ -14,18 +15,3 @@ export const router = createBrowserRouter([
     ],
   },
 ]);
-
-// TODO: refactor;
-// For layer etc (header, footer)
-// https://www.dhiwise.com/post/the-power-of-createbrowserrouter-optimizing-your-react-app
-function LayoutComponent() {
-  return (
-    <div>
-      <header>Header Content</header>
-      <main>
-        <Outlet /> {/* Nested routes render here */}
-      </main>
-      <footer>Footer Content</footer>
-    </div>
-  );
-}

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Logout from '../../components/logout/Logout';
+import Logout from '../../components/auth/Logout';
 
 const Home = () => {
   return (

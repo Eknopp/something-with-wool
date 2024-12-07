@@ -9,7 +9,7 @@ type UserResponse = {
   token: string;
 };
 
-const LogIn = () => {
+const Login = () => {
   const [email_address, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useAppDispatch();
@@ -77,4 +77,4 @@ const LogIn = () => {
   );
 };
 
-export default LogIn;
+export default Login;
