@@ -3,6 +3,17 @@ Rails.application.routes.draw do
     namespace :v1 do
       resource :session, only: [:create, :destroy] # Login and logout
       resources :passwords, only: [:create, :update], param: :token # Password reset flow
+      resources :users, only: [:create] do
+        collection do
+          get :me
+        end
+      end
+      # post 'auth/login', to: 'auth#login'
+      resources :auth do
+        collection do
+          post :login
+        end
+      end
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
