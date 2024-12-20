@@ -38,6 +38,7 @@ const Login = () => {
           token: token,
         })
       );
+      // TODO: Saving to local storage is not secure. Consider jwt in httponly cookie
       localStorage.setItem('user', JSON.stringify(responseData));
       localStorage.setItem('token', token);
     } catch (error) {
