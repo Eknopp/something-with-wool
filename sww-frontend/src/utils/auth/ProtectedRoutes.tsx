@@ -12,7 +12,6 @@ const ProtectedRoutes = <P extends object>({
   componentProps,
 }: Props<P>) => {
   const isAuthenticated = useAuth().isAuthenticated;
-  console.log('isAuthenticated: ', isAuthenticated);
 
   if (!isAuthenticated) {
     return <Login />;

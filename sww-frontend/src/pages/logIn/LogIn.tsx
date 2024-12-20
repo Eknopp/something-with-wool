@@ -3,14 +3,16 @@ import { useAppDispatch } from '../../hooks/redux-hooks';
 import { setAuthUser } from '../../redux/authUser/authUser.slice';
 
 type UserResponse = {
-  id: number;
-  email_address: string;
-  username: string;
-  token: string;
+  data: {
+    id: number;
+    email: string;
+    username: string;
+    token: string;
+  };
 };
 
 const Login = () => {
-  const [email_address, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useAppDispatch();
 
@@ -18,23 +20,26 @@ const Login = () => {
     e.preventDefault();
     try {
       // TODO: separate API calls in class
-      const response = await fetch('http://localhost:3001/api/v1/session', {
+      const response = await fetch(' http://localhost:3001/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email_address, password }),
+        body: JSON.stringify({ user: { email, password } }),
       });
-      const data: UserResponse = await response.json();
+      const responseData: UserResponse = await response.json();
+      const token = response.headers.get('Authorization')?.split(' ')[1];
+      if (!token || !responseData) throw 'Invalid token recieved';
       dispatch(
         setAuthUser({
-          id: data.id.toString(),
-          email: data.email_address,
-          username: data.username,
-          token: data.token,
+          id: responseData.data.id,
+          email: responseData.data.email,
+          username: responseData.data.username,
+          token: token,
         })
       );
-      localStorage.setItem('user', JSON.stringify(data));
+      localStorage.setItem('user', JSON.stringify(responseData));
+      localStorage.setItem('token', token);
     } catch (error) {
       console.error('Failed to login:', error);
     }
@@ -49,9 +54,9 @@ const Login = () => {
             <label className="block text-gray-700">Email Address:</label>
             <input
               type="text"
-              name="email_address"
-              value={email_address}
-              onChange={(e) => setUsername(e.target.value)}
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
             />
           </div>

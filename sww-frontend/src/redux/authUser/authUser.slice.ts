@@ -4,7 +4,7 @@ export interface InitialStateType {
   username: string | null;
   email: string | null;
   token: string | null;
-  id: string | null;
+  id: number | null;
 }
 const initialState: InitialStateType = {
   username: null,

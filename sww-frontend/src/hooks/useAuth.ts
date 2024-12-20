@@ -4,5 +4,5 @@ export function useAuth() {
   const { username, email, token, id } = useAppSelector(
     (state) => state.authUser
   );
-  return { username, email, token, id, isAuthenticated: !!token };
+  return { username, email, id, token, isAuthenticated: !!token };
 }
