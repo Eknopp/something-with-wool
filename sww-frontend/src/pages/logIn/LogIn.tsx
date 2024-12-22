@@ -22,6 +22,7 @@ const Login = () => {
       // TODO: separate API calls in class
       const response = await fetch(' http://localhost:3001/login', {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -38,9 +39,9 @@ const Login = () => {
           token: token,
         })
       );
-      // TODO: Saving to local storage is not secure. Consider jwt in httponly cookie
+      // // TODO: Saving to local storage is not secure. Consider jwt in httponly cookie
       localStorage.setItem('user', JSON.stringify(responseData));
-      localStorage.setItem('token', token);
+      // localStorage.setItem('token', token);
     } catch (error) {
       console.error('Failed to login:', error);
     }
