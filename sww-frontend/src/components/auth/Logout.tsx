@@ -8,7 +8,7 @@ const Logout = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch(' http://localhost:3001/logout', {
+      await fetch(' http://localhost:3001/logout', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -16,12 +16,8 @@ const Logout = () => {
         },
         body: JSON.stringify({ user: { email: email } }),
       });
-      if (!response.ok) {
-        throw new Error('Logout failed');
-      } else {
-        dispatch(removeAuthUser());
-        localStorage.clear();
-      }
+      dispatch(removeAuthUser());
+      localStorage.clear();
     } catch (error) {
       console.log('Failed to logout: ', error);
     }
