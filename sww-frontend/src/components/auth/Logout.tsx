@@ -4,15 +4,15 @@ import { removeAuthUser } from '../../redux/authUser/authUser.slice';
 
 const Logout = () => {
   const dispatch = useDispatch();
-  const { email, token } = useAuth();
+  const { email } = useAuth();
 
   const handleLogout = async () => {
     try {
-      await fetch(' http://localhost:3001/logout', {
+      await fetch('http://localhost:3001/logout', {
         method: 'DELETE',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ user: { email: email } }),
       });

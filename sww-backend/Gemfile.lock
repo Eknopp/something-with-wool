@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/Eknopp/devise-jwt-cookie.git
+  revision: 7cd3f7362e3073c9e7089de185f6525bca8495a0
+  specs:
+    devise-jwt-cookie (0.5.1)
+      devise-jwt (~> 0.12.1)
+      dry-auto_inject (~> 1.0.1)
+      dry-configurable (= 1.2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -340,6 +349,7 @@ DEPENDENCIES
   debug
   devise
   devise-jwt
+  devise-jwt-cookie!
   jsonapi-serializer
   kamal
   pg (~> 1.1)

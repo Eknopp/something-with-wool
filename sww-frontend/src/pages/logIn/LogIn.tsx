@@ -22,26 +22,22 @@ const Login = () => {
       // TODO: separate API calls in class
       const response = await fetch(' http://localhost:3001/login', {
         method: 'POST',
-        // credentials: 'include',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ user: { email, password } }),
       });
       const responseData: UserResponse = await response.json();
-      const token = response.headers.get('Authorization')?.split(' ')[1];
-      if (!token || !responseData) throw 'Invalid token recieved';
+      if (!responseData) throw 'Failed to fetch user';
       dispatch(
         setAuthUser({
           id: responseData.data.id,
           email: responseData.data.email,
           username: responseData.data.username,
-          token: token,
         })
       );
-      // // TODO: Saving to local storage is not secure. Consider jwt in httponly cookie
       localStorage.setItem('user', JSON.stringify(responseData));
-      localStorage.setItem('token', token);
     } catch (error) {
       console.error('Failed to login:', error);
     }

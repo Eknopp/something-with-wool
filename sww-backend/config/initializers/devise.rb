@@ -322,4 +322,7 @@ Devise.setup do |config|
     ]
     jwt.expiration_time = 30.minutes.to_i
   end
+  config.jwt_cookie do |jwt_cookie|
+    jwt_cookie.name = 'jwt'
+  end
 end
