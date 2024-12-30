@@ -1,45 +1,19 @@
 import React, { useState } from 'react';
-import { useAppDispatch } from '../../hooks/redux-hooks';
-import { setAuthUser } from '../../redux/authUser/authUser.slice';
-
-type UserResponse = {
-  data: {
-    id: number;
-    email: string;
-    username: string;
-    token: string;
-  };
-};
+import { useDispatch } from 'react-redux';
+import { AuthUserThunks } from '../../redux/components/authUser/authUser.thunks';
+import { AppDispatch } from '../../redux/store';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useAppDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // TODO: separate API calls in class
-      const response = await fetch(' http://localhost:3001/login', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ user: { email, password } }),
-      });
-      const responseData: UserResponse = await response.json();
-      if (!responseData) throw 'Failed to fetch user';
-      dispatch(
-        setAuthUser({
-          id: responseData.data.id,
-          email: responseData.data.email,
-          username: responseData.data.username,
-        })
-      );
-      localStorage.setItem('user', JSON.stringify(responseData));
+      await dispatch(AuthUserThunks.login({ email, password })).unwrap();
     } catch (error) {
-      console.error('Failed to login:', error);
+      throw new Error(`Failed to login: ${error}`);
     }
   };
 

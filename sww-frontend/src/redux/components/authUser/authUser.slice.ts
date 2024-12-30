@@ -1,6 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { LoginResponse } from '../../../api/endpoints/sessions/session.api.types';
+import { AuthUserThunks } from '../authUser/authUser.thunks';
 
 export interface InitialStateType {
+  // TODO: Add state - loading: 'idle' | 'pending' | 'succeeded' | 'failed'
   username: string | null;
   email: string | null;
   id: number | null;
@@ -28,6 +31,17 @@ const authUser = createSlice({
       state.email = null;
       state.id = null;
     },
+  },
+  extraReducers: (builder) => {
+    // TODO: Add pending and rejected reducers
+    builder.addCase(
+      AuthUserThunks.login.fulfilled,
+      (state, action: PayloadAction<LoginResponse>) => {
+        state.username = action.payload.username;
+        state.email = action.payload.email;
+        state.id = action.payload.id;
+      }
+    );
   },
 });
 

@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authUser from './authUser/authUser.slice';
+import { thunk } from 'redux-thunk';
+import authUser from './components/authUser/authUser.slice';
 
 export const store = configureStore({
   reducer: {
     authUser,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

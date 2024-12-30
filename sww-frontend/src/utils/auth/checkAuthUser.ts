@@ -1,25 +1,16 @@
-import { setAuthUser } from '../../redux/authUser/authUser.slice';
+import { setAuthUser } from '../../redux/components/authUser/authUser.slice';
 import { store } from '../../redux/store';
-
-type FoundUser = {
-  data: {
-    email: string;
-    id: number;
-    username: string;
-  };
-};
+import { FoundUser } from './checkAuthUser.types';
 
 const checkAuthUser = () => {
   const loggedInUser = localStorage.getItem('user');
-  const token = localStorage.getItem('token');
   if (loggedInUser) {
     const foundUser: FoundUser = JSON.parse(loggedInUser);
     store.dispatch(
       setAuthUser({
-        id: foundUser.data.id,
-        email: foundUser.data.email,
-        username: foundUser.data.username,
-        token: token,
+        id: foundUser.id,
+        email: foundUser.email,
+        username: foundUser.username,
       })
     );
   }

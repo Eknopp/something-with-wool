@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useAuth } from '../../hooks/useAuth';
-import { removeAuthUser } from '../../redux/authUser/authUser.slice';
+import { removeAuthUser } from '../../redux/components/authUser/authUser.slice';
 
 const Logout = () => {
   const dispatch = useDispatch();
