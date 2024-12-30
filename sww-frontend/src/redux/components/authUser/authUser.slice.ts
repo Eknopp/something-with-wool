@@ -1,17 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { LoginResponse } from '../../../api/endpoints/sessions/session.api.types';
 import { AuthUserThunks } from '../authUser/authUser.thunks';
+import {
+  InitialAuthUserStateType,
+  sessionStatus,
+} from './authUser.redux.types';
 
-export interface InitialStateType {
-  // TODO: Add state - loading: 'idle' | 'pending' | 'succeeded' | 'failed'
-  username: string | null;
-  email: string | null;
-  id: number | null;
-}
-const initialState: InitialStateType = {
-  username: null,
-  email: null,
-  id: null,
+const initialState: InitialAuthUserStateType = {
+  data: {
+    username: null,
+    email: null,
+    id: null,
+  },
+  status: sessionStatus.idle,
+  error: null,
 };
 
 const authUser = createSlice({
@@ -19,29 +21,47 @@ const authUser = createSlice({
   initialState,
   reducers: {
     setAuthUser(
-      state: InitialStateType,
-      action: PayloadAction<InitialStateType>
+      state: InitialAuthUserStateType,
+      action: PayloadAction<InitialAuthUserStateType>
     ) {
-      state.username = action.payload.username;
-      state.email = action.payload.email;
-      state.id = action.payload.id;
+      state.data = {
+        username: action.payload.data.username,
+        email: action.payload.data.email,
+        id: action.payload.data.id,
+      };
+      state.status = action.payload.status;
+      state.error = action.payload.error;
     },
-    removeAuthUser(state) {
-      state.username = null;
-      state.email = null;
-      state.id = null;
+    removeAuthUser(state: InitialAuthUserStateType) {
+      state.data = {
+        username: null,
+        email: null,
+        id: null,
+      };
+      state.status = sessionStatus.idle;
+      state.error = null;
     },
   },
   extraReducers: (builder) => {
     // TODO: Add pending and rejected reducers
-    builder.addCase(
-      AuthUserThunks.login.fulfilled,
-      (state, action: PayloadAction<LoginResponse>) => {
-        state.username = action.payload.username;
-        state.email = action.payload.email;
-        state.id = action.payload.id;
-      }
-    );
+    builder
+      .addCase(AuthUserThunks.login.pending, (state) => {
+        state.status = sessionStatus.pending;
+      })
+      .addCase(
+        AuthUserThunks.login.fulfilled,
+        (state, action: PayloadAction<LoginResponse>) => {
+          state.data.username = action.payload.username;
+          state.data.email = action.payload.email;
+          state.data.id = action.payload.id;
+          state.status = sessionStatus.succeeded;
+          state.error = null;
+        }
+      )
+      .addCase(AuthUserThunks.login.rejected, (state, action) => {
+        state.status = sessionStatus.failed;
+        state.error = action.error;
+      });
   },
 });
 
