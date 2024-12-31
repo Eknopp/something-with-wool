@@ -1,9 +1,9 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit';
 import { LoginResponse } from '../../../api/endpoints/sessions/session.api.types';
 import { AuthUserThunks } from '../authUser/authUser.thunks';
 import {
   InitialAuthUserStateType,
-  sessionStatus,
+  SessionStatus,
 } from './authUser.redux.types';
 
 const initialState: InitialAuthUserStateType = {
@@ -12,8 +12,8 @@ const initialState: InitialAuthUserStateType = {
     email: null,
     id: null,
   },
-  status: sessionStatus.idle,
-  error: null,
+  status: SessionStatus.idle,
+  error: {},
 };
 
 const authUser = createSlice({
@@ -30,7 +30,7 @@ const authUser = createSlice({
         id: action.payload.data.id,
       };
       state.status = action.payload.status;
-      state.error = action.payload.error;
+      state.error = {};
     },
     removeAuthUser(state: InitialAuthUserStateType) {
       state.data = {
@@ -38,29 +38,32 @@ const authUser = createSlice({
         email: null,
         id: null,
       };
-      state.status = sessionStatus.idle;
-      state.error = null;
+      state.status = SessionStatus.idle;
+      state.error = {};
     },
   },
   extraReducers: (builder) => {
-    // TODO: Add pending and rejected reducers
     builder
       .addCase(AuthUserThunks.login.pending, (state) => {
-        state.status = sessionStatus.pending;
+        state.status = SessionStatus.pending;
       })
       .addCase(
         AuthUserThunks.login.fulfilled,
         (state, action: PayloadAction<LoginResponse>) => {
-          state.data.username = action.payload.username;
-          state.data.email = action.payload.email;
-          state.data.id = action.payload.id;
-          state.status = sessionStatus.succeeded;
-          state.error = null;
+          if ('id' in action.payload) {
+            state.data = {
+              username: action.payload.username,
+              email: action.payload.email,
+              id: action.payload.id,
+            };
+          }
+          state.status = SessionStatus.succeeded;
+          state.error = {};
         }
       )
       .addCase(AuthUserThunks.login.rejected, (state, action) => {
-        state.status = sessionStatus.failed;
-        state.error = action.error;
+        state.status = SessionStatus.failed;
+        state.error = action.payload as SerializedError;
       });
   },
 });

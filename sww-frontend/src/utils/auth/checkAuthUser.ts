@@ -1,6 +1,6 @@
 import {
   FoundUser,
-  sessionStatus,
+  SessionStatus,
 } from '../../redux/components/authUser/authUser.redux.types';
 import { setAuthUser } from '../../redux/components/authUser/authUser.slice';
 import { store } from '../../redux/store';
@@ -16,8 +16,8 @@ const checkAuthUser = () => {
           email: foundUser.email,
           username: foundUser.username,
         },
-        status: sessionStatus.succeeded,
-        error: null,
+        status: SessionStatus.succeeded,
+        error: {},
       })
     );
   }

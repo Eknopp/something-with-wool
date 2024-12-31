@@ -1,3 +1,5 @@
+import { SerializedError } from '@reduxjs/toolkit';
+
 export type FoundUser = {
   email: string;
   id: number;
@@ -10,7 +12,7 @@ export interface InitialUserData {
   id: number | null;
 }
 
-export enum sessionStatus {
+export enum SessionStatus {
   idle = 'idle',
   pending = 'pending',
   succeeded = 'succeeded',
@@ -19,6 +21,6 @@ export enum sessionStatus {
 
 export interface InitialAuthUserStateType {
   data: InitialUserData;
-  status: sessionStatus;
-  error: unknown;
+  status: SessionStatus;
+  error: Pick<SerializedError, 'code' | 'message' | 'name'>;
 }

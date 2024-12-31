@@ -34,7 +34,7 @@ export abstract class ApiService {
     });
 
     if (result.statusText === 'Unauthorized') {
-      throw new UnauthorizedError();
+      throw new UnauthorizedError(await result.text());
     } else if (!result.ok) {
       throw new Error(`Failed to fetch ${path}: ${result.statusText}`);
     }

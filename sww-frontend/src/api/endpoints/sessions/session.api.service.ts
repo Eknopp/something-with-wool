@@ -1,4 +1,5 @@
 import { ApiService } from '../../services/api.service.abstract';
+import { UnauthorizedError } from '../../services/api.service.errors';
 import { LoginCredentials, LoginResponse } from './session.api.types';
 
 export class SessionApi extends ApiService {
@@ -13,7 +14,10 @@ export class SessionApi extends ApiService {
       );
       return responseData;
     } catch (error) {
-      throw new Error(`Failed to login: ${error}`);
+      if (error instanceof UnauthorizedError) {
+        throw error;
+      }
+      throw new Error(`${error}`);
     }
   }
 }
