@@ -1,11 +1,15 @@
 import { Link } from 'react-router-dom';
 import Logout from '../../components/auth/Logout';
+import { useAuth } from '../../hooks/useAuth';
 
 const Home = () => {
+  const { username } = useAuth();
+  // useEffect(() => {}, [username]);
   return (
     <div>
       <div>
         <h1>Home Page</h1>
+        <p>Hello {username}</p>
         <p>Welcome to Something With Wool!</p>
       </div>
       <div>

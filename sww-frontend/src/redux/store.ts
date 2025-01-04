@@ -5,6 +5,7 @@ import { thunk } from 'redux-thunk';
 import authUser from './components/authUser/authUser.slice';
 
 // TODO: check why after hard refresh, persist:root shows up in local storage
+// TODO: check why after login, only after hard refresh, the store shows it's value in the react dev tools
 const rootPersistConfig = {
   key: 'root',
   storage,
@@ -14,7 +15,7 @@ const rootPersistConfig = {
 const userPersistConfig = {
   key: 'user',
   storage,
-  blacklist: ['error', 'status', 'user'],
+  blacklist: ['error', 'user'],
 };
 
 const rootReducer = combineReducers({
