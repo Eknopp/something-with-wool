@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useAuth } from '../../hooks/useAuth';
 import { AuthUserThunks } from '../../redux/components/authUser/authUser.thunks';
 import { AppDispatch } from '../../redux/store';
 
@@ -7,6 +8,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch: AppDispatch = useDispatch();
+  const { error: authUserError } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,6 +43,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
             />
+            <p>{authUserError.message}</p>
           </div>
           <button
             type="submit"

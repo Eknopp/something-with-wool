@@ -11,11 +11,8 @@ export class AuthUserThunks {
 
   static login = createThunk<LoginCredentials, LoginResponse, SessionApi>({
     apiService: this.apiService,
-    actionName: 'authUser/login',
+    actionName: 'user/login',
     apiMethod: 'login',
-    onSuccess: (response) => {
-      localStorage.setItem('user', JSON.stringify(response));
-    },
     onError: (error) => {
       return error;
     },
