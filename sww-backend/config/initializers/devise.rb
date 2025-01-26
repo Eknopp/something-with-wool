@@ -313,16 +313,16 @@ Devise.setup do |config|
 
   config.jwt do |jwt|
     # TODO: Change to use a separate key
-    jwt.secret = Rails.application.credentials.fetch(:secret_key_base)
+    jwt.secret = SecretKeysConfiguration::ACCESS_TOKEN_SECRET
     jwt.dispatch_requests = [
-      ['POST', %r{^/login$}]
+      ["POST", %r{^/login$}]
     ]
     jwt.revocation_requests = [
-      ['DELETE', %r{^/logout$}]
+      ["DELETE", %r{^/logout$}]
     ]
-    jwt.expiration_time = 30.minutes.to_i
+    jwt.expiration_time = 15.minutes.to_i
   end
   config.jwt_cookie do |jwt_cookie|
-    jwt_cookie.name = 'jwt'
+    jwt_cookie.name = "access_token"
   end
 end
