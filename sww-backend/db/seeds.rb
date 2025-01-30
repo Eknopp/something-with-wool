@@ -25,5 +25,5 @@ if !Rails.env.development?
   Rails.logger.info "Seeding disabled - not in development mode"
   return
 end
- 
-seed User, {email: 'local@test.com'},{password:'123456'}
+
+seed User, {email: "local@test.com"}, {password: "123456"}
