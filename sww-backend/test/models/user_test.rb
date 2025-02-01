@@ -24,7 +24,17 @@
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  setup do
+    @user = users(:one)
+  end
+
+  test "user creation" do
+    user = User.new(email: "test@example.com", password: "password", username: "testuser")
+    assert user.save, "User should be saved successfully"
+  end
+
+  test "should log in user" do
+    sign_in @user
+    # TODO: Add assertion through using a path that only a logged in user can access
+  end
 end
