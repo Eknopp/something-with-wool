@@ -232,6 +232,7 @@ erDiagram
     PROJECTS ||--o{ PROJECTS_CATEGORIES : "is in many categories"
     PROJECTS ||--o{ PROJECTS_TAGS : "has many tags"
     PROJECTS ||--o{ PROJECTS_HOOKS : "has many hook sizes"
+    PROJECTS ||--o{ PROJECTS_NEEDLES : "has many needle sizes"
     CATEGORIES ||--o{ PROJECTS_CATEGORIES : "is in many projects"
     TAGS ||--o{ PROJECTS_TAGS : "has many projects"
     HOOKS ||--o{ PROJECTS_HOOKS : "has many projects"
@@ -241,6 +242,7 @@ erDiagram
     YARNS ||--o{ WEIGHTS : "has a weight"
     YARNS ||--o{ YARNS_NEEDLES : "has many needle sizes"
     NEEDLES ||--o{ YARNS_NEEDLES : "has many yarns"
+    NEEDLES ||--o{ PROJECTS_NEEDLES : "has many projects"
     YARNS ||--o{ YARNS_HOOKS : "has many hook sizes"
     HOOKS ||--o{ YARNS_HOOKS : "has many yarns"
 
