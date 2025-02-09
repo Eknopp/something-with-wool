@@ -44,7 +44,6 @@ erDiagram
         string status "in_queue, in_progress, finished"
         string notes
         string size
-        string craft_type "knitting, crochet, weaving"
         number stiches
         number rows
         string swatch_size
@@ -97,11 +96,13 @@ erDiagram
     }
     NEEDLES {
         int id PK
+        string metric
+        string us_size
+        string uk_size
 
     }
     HOOKS {
         int id PK
-
     }
     CATEGORIES {
         int id PK
@@ -206,21 +207,21 @@ erDiagram
     USERS ||--o{ FAVOURITES : "has many favourites"
     USERS ||--o{ PROJECTS : "has many projects"
     USERS ||--o{ PATTERNS : "has many patterns"
-    USERS ||--o{ YARNS : "has many yarns"
+    V USERS ||--o{ USERS_YARNS : "has many yarns"
     USERS ||--o{ MAGAZINES : "has many magazines"
     MAGAZINES ||--o{ USERS : "has many designers"
 
-    PATTERNS ||--o{ PROJECTS : "is in many projects"
-    PATTERNS ||--o{ FAVOURITES : "is favourited in"
-    PATTERNS ||--o{ PURCHASES: "is purchased in"
-    PATTERNS ||--o{ PATTERNS_YARNS : "uses"
-    PATTERNS ||--o{ PATTERNS_CATEGORIES : "is in many categories"
-    PATTERNS ||--o{ PATTERNS_TAGS : "has many tags"
-    PATTERNS ||--o{ PATTERNS_NEEDLES : "has many needle sizes"
+    V PATTERNS ||--o{ PROJECTS : "is in many projects"
+    V PATTERNS ||--o{ FAVOURITES : "is favourited in"
+    V PATTERNS ||--o{ PURCHASES: "is purchased in"
+    V PATTERNS ||--o{ PATTERNS_YARNS : "uses"
+    V PATTERNS ||--o{ PATTERNS_CATEGORIES : "is in many categories"
+    V PATTERNS ||--o{ PATTERNS_TAGS : "has many tags"
+    V PATTERNS ||--o{ PATTERNS_NEEDLES : "has many needle sizes"
     PATTERNS ||--o{ PATTERNS_HOOKS : "has many hook sizes"
     CATEGORIES ||--o{ PATTERNS_CATEGORIES : "is in many projects"
     TAGS ||--o{ PATTERNS_TAGS : "has many patterns"
-    NEEDLES ||--o{ PATTERNS_NEEDLES : "has many patterns"
+    V NEEDLES ||--o{ PATTERNS_NEEDLES : "has many patterns"
     HOOKS ||--o{ PATTERNS_HOOKS : "has many patterns"
     YARNS ||--o{ PATTERNS_YARNS : "is used in"
     PATTERNS ||--o{ PATTERNS_MAGAZINES : "is in many magazines"
@@ -241,6 +242,7 @@ erDiagram
     YARNS||--o{ FAVOURITES : "is favourited in"
     YARNS ||--o{ WEIGHTS : "has a weight"
     YARNS ||--o{ YARNS_NEEDLES : "has many needle sizes"
+    YARNS ||--o{ USERS_YARNS : "has many users"
     NEEDLES ||--o{ YARNS_NEEDLES : "has many yarns"
     NEEDLES ||--o{ PROJECTS_NEEDLES : "has many projects"
     YARNS ||--o{ YARNS_HOOKS : "has many hook sizes"

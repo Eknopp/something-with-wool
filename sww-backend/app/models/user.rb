@@ -30,6 +30,13 @@ class User < ApplicationRecord
     :jwt_authenticatable, :jwt_cookie_authenticatable,
     jwt_revocation_strategy: self
 
+  has_many :user_yarns
+  has_many :yarns, through: :user_yarns
+  has_many :patterns
+  has_many :favorites
+  has_many :purchases
+  has_many :patterns
+
   def refresh_token_valid?
     return false if refresh_token.blank?
 
@@ -39,6 +46,18 @@ class User < ApplicationRecord
 
     exp = decoded_token["exp"]
     Time.zone.at(exp) > Time.zone.now
+  end
+
+  def favorite(item)
+    favorites.create(favoritable: item)
+  end
+
+  def unfavorite(item)
+    favorites.where(favoritable: item).destroy_all
+  end
+
+  def favorited?(item)
+    favorites.exists?(favoritable: item)
   end
 
   private
