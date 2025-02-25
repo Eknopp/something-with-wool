@@ -35,7 +35,7 @@ class User < ApplicationRecord
   has_many :patterns
   has_many :favorites
   has_many :purchases
-  has_many :patterns
+  has_many :magazines
 
   def refresh_token_valid?
     return false if refresh_token.blank?

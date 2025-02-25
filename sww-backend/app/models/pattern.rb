@@ -1,14 +1,22 @@
 class Pattern < ApplicationRecord
   belongs_to :user
   has_many :projects
+
   has_many :patterns_needles
   has_many :needles, through: :patterns_needles
+
   has_many :patterns_categories
   has_many :categories, through: :patterns_categories
+
   has_many :patterns_yarns
   has_many :yarns, through: :patterns_yarns
+
   has_many :patterns_tags
   has_many :tags, through: :patterns_tags
+
+  has_many :patterns_hooks
+  has_many :hooks, through: :patterns_hooks
+
   has_many :favorites, as: :favoritable
   has_many :purchases, as: :purchasable
 

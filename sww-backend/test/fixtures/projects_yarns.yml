@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project: one
+  yarn: one
+  amount: 1.5
+
+two:
+  project: two
+  yarn: two
+  amount: 1.5
