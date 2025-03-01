@@ -30,12 +30,19 @@ class User < ApplicationRecord
     :jwt_authenticatable, :jwt_cookie_authenticatable,
     jwt_revocation_strategy: self
 
-  has_many :user_yarns
-  has_many :yarns, through: :user_yarns
+  has_many :users_yarns
+  has_many :yarns, through: :users_yarns
   has_many :patterns
+  has_many :projects
   has_many :favorites
   has_many :purchases
+  # TODO: has many magazines as a user of role magazine_publisher
   has_many :magazines
+  has_many :followers
+
+  validates :pronouns, inclusion: {in: %w[he/him she/her they/them], message: "%{value} is not a valid pronoun"}
+  validates :units, inclusion: {in: %w[metric imperial], message: "%{value} is not a valid measuring unit"}
+  validates :role, inclusion: {in: %w[user yarn_disributor magazine_publisher shop admin], message: "%{value} is not a valid user role"}
 
   def refresh_token_valid?
     return false if refresh_token.blank?

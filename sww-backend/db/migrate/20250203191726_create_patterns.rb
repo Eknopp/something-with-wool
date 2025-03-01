@@ -3,14 +3,11 @@ class CreatePatterns < ActiveRecord::Migration[8.0]
     create_table :patterns do |t|
       t.timestamps
       t.belongs_to :user, foreign_key: true, null: false
-      t.integer :needle_id, foreign_key: true
-      t.integer :yarn_id, foreign_key: true
-      t.integer :category_id, foreign_key: true
       t.string :name, null: false
       t.string :craft_type, null: false
-      t.float :price
+      t.float :price, null: false
       # TODO below and add the rest of relationship
-      t.string :currency
+      t.string :currency, null: false, default: ["EUR"]
       t.string :overall_yarn_weight
       t.integer :nbr_stitches
       t.integer :nbr_rows

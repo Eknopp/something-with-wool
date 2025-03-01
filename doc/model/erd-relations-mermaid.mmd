@@ -56,7 +56,6 @@ erDiagram
         int user_id FK
         string name
         string craft_type "knitting, crochet, weaving"
-        string needle_size
         float price
         string currency
         string overal_yarn_weight "lace, fingering, sport, dk"
@@ -84,6 +83,7 @@ erDiagram
         string weight
         number meterage
         number unit_weight
+        string weight
         string guage
         string fibers
         string texture
@@ -103,10 +103,15 @@ erDiagram
     }
     HOOKS {
         int id PK
+        string metric_mm
+        string us_size
+        string uk_size
     }
     CATEGORIES {
         int id PK
-        string name
+        string type
+        string main_category
+        string sub_category
     }
     TAGS {
         int id PK
@@ -126,10 +131,6 @@ erDiagram
         string website
         string cover_picture_path
         string biography
-    }
-    WEIGHTS {
-        int id PK
-        int yarn_id FK
     }
     PATTERNS_YARNS {
         int id PK
@@ -201,50 +202,49 @@ erDiagram
 
 
     %% Relationships
-    USERS o{--o{ FOLLOWERS : "has many followers"
-    FOLLOWERS o{--o{ USERS : "has many followees"
-    USERS ||--o{ PURCHASES : "has many purchases"
-    USERS ||--o{ FAVOURITES : "has many favourites"
-    USERS ||--o{ PROJECTS : "has many projects"
-    USERS ||--o{ PATTERNS : "has many patterns"
-    V USERS ||--o{ USERS_YARNS : "has many yarns"
-    V USERS ||--o{ MAGAZINES : "has many magazines"
-    MAGAZINES ||--o{ USERS : "has many designers"
+    V USERS o{--o{ FOLLOWERS : "has many followers"
+    V FOLLOWERS o{--o{ USERS : "has many followees"
+    V USERS ||--o{ PURCHASES : "has many purchases" V
+    V USERS ||--o{ FAVOURITES : "has many favourites" V
+    V USERS ||--o{ PROJECTS : "has many projects" V
+    V USERS ||--o{ PATTERNS : "has many patterns" V
+    V USERS ||--o{ USERS_YARNS : "has many yarns" V
+    V USERS ||--o{ MAGAZINES : "has many magazines" V
+    V MAGAZINES ||--o{ USERS : "has many designers" V
 
-    V PATTERNS ||--o{ PROJECTS : "is in many projects"
-    V PATTERNS ||--o{ FAVOURITES : "is favourited in"
-    V PATTERNS ||--o{ PURCHASES: "is purchased in"
-    V PATTERNS ||--o{ PATTERNS_YARNS : "uses"
-    V PATTERNS ||--o{ PATTERNS_CATEGORIES : "is in many categories"
-    V PATTERNS ||--o{ PATTERNS_TAGS : "has many tags"
-    V PATTERNS ||--o{ PATTERNS_NEEDLES : "has many needle sizes"
-    V PATTERNS ||--o{ PATTERNS_HOOKS : "has many hook sizes"
-    V CATEGORIES ||--o{ PATTERNS_CATEGORIES : "is in many patterns"
-    V TAGS ||--o{ PATTERNS_TAGS : "has many patterns"
-    V NEEDLES ||--o{ PATTERNS_NEEDLES : "has many patterns"
-    V HOOKS ||--o{ PATTERNS_HOOKS : "has many patterns"
-    V YARNS ||--o{ PATTERNS_YARNS : "is used in"
-    V PATTERNS ||--o{ PATTERNS_MAGAZINES : "is in many magazines"
-    V MAGAZINES ||--o{ PATTERNS_MAGAZINES : "has many patterns"
+    V PATTERNS ||--o{ PROJECTS : "is in many projects" V
+    V PATTERNS ||--o{ FAVOURITES : "is favourited in" V
+    V PATTERNS ||--o{ PURCHASES: "is purchased in" V
+    V PATTERNS ||--o{ PATTERNS_YARNS : "uses" V
+    V PATTERNS ||--o{ PATTERNS_CATEGORIES : "is in many categories" V
+    V PATTERNS ||--o{ PATTERNS_TAGS : "has many tags" V
+    V PATTERNS ||--o{ PATTERNS_NEEDLES : "has many needle sizes" V
+    V PATTERNS ||--o{ PATTERNS_HOOKS : "has many hook sizes" V
+    V CATEGORIES ||--o{ PATTERNS_CATEGORIES : "is in many patterns" V
+    V TAGS ||--o{ PATTERNS_TAGS : "has many patterns" V
+    V NEEDLES ||--o{ PATTERNS_NEEDLES : "has many patterns" V
+    V HOOKS ||--o{ PATTERNS_HOOKS : "has many patterns" V
+    V YARNS ||--o{ PATTERNS_YARNS : "is used in" V
+    V PATTERNS ||--o{ PATTERNS_MAGAZINES : "is in many magazines" V
+    V MAGAZINES ||--o{ PATTERNS_MAGAZINES : "has many patterns" V
 
-    V PROJECTS ||--o{ FAVOURITES : "is favourited in"
-    V PROJECTS ||--o{ PROJECTS_YARNS : "uses"
-    V PROJECTS ||--o{ PROJECTS_CATEGORIES : "is in many categories"
-    V PROJECTS ||--o{ PROJECTS_TAGS : "has many tags"
-    V PROJECTS ||--o{ PROJECTS_HOOKS : "has many hook sizes"
-    V PROJECTS ||--o{ PROJECTS_NEEDLES : "has many needle sizes"
-    V CATEGORIES ||--o{ PROJECTS_CATEGORIES : "is in many projects"
-    V TAGS ||--o{ PROJECTS_TAGS : "has many projects"
-    V HOOKS ||--o{ PROJECTS_HOOKS : "has many projects"
-    V YARNS ||--o{ PROJECTS_YARNS : "is used in"
+    V PROJECTS ||--o{ FAVOURITES : "is favourited in" V
+    V PROJECTS ||--o{ PROJECTS_YARNS : "uses" V
+    V PROJECTS ||--o{ PROJECTS_CATEGORIES : "is in many categories" V
+    V PROJECTS ||--o{ PROJECTS_TAGS : "has many tags" V
+    V PROJECTS ||--o{ PROJECTS_HOOKS : "has many hook sizes" V
+    V PROJECTS ||--o{ PROJECTS_NEEDLES : "has many needle sizes" V
+    V CATEGORIES ||--o{ PROJECTS_CATEGORIES : "is in many projects" V
+    V TAGS ||--o{ PROJECTS_TAGS : "has many projects" V
+    V HOOKS ||--o{ PROJECTS_HOOKS : "has many projects" V
+    V YARNS ||--o{ PROJECTS_YARNS : "is used in" V
 
-    V YARNS||--o{ FAVOURITES : "is favourited in"
-    YARNS ||--o{ WEIGHTS : "has a weight"
-    YARNS ||--o{ YARNS_NEEDLES : "has many needle sizes"
-    YARNS ||--o{ USERS_YARNS : "has many users"
-    NEEDLES ||--o{ YARNS_NEEDLES : "has many yarns"
-    NEEDLES ||--o{ PROJECTS_NEEDLES : "has many projects"
-    YARNS ||--o{ YARNS_HOOKS : "has many hook sizes"
-    HOOKS ||--o{ YARNS_HOOKS : "has many yarns"
+    V YARNS||--o{ FAVOURITES : "is favourited in" V
+    V YARNS ||--o{ YARNS_NEEDLES : "has many needle sizes"
+    V YARNS ||--o{ USERS_YARNS : "has many users"
+    V NEEDLES ||--o{ YARNS_NEEDLES : "has many yarns" V
+    V NEEDLES ||--o{ PROJECTS_NEEDLES : "has many projects" V
+    V YARNS ||--o{ YARNS_HOOKS : "has many hook sizes" V
+    V HOOKS ||--o{ YARNS_HOOKS : "has many yarns" V
 
-    MAGAZINES ||--o{ ISSUES : "has many issues"
+    V MAGAZINES ||--o{ ISSUES : "has many issues"
