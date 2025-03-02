@@ -1,7 +1,7 @@
 class CreateYarns < ActiveRecord::Migration[8.0]
   def change
     create_table :yarns do |t|
-      t.integer :user_id
+      t.integer :user, null: false, foreign_key: true
       t.string :weight
       t.decimal :meterage
       t.decimal :unit_weight
@@ -16,7 +16,5 @@ class CreateYarns < ActiveRecord::Migration[8.0]
       t.text :notes
       t.timestamps
     end
-
-    add_foreign_key :yarns, :users, column: :user_id
   end
 end

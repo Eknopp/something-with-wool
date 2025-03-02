@@ -9,7 +9,5 @@ class CreatePurchases < ActiveRecord::Migration[8.0]
 
       t.timestamps
     end
-
-    # add_foreign_key :purchases, :users, column: :user_id
   end
 end

@@ -10,9 +10,64 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_03_194752) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_01_170531) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string "type", null: false
+    t.string "main_category", null: false
+    t.string "sub_category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "favoritable_type", null: false
+    t.bigint "favoritable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["favoritable_type", "favoritable_id"], name: "index_favorites_on_favoritable"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "followers", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "follower_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["follower_id"], name: "index_followers_on_follower_id"
+    t.index ["user_id"], name: "index_followers_on_user_id"
+  end
+
+  create_table "hooks", force: :cascade do |t|
+    t.string "metric_mm", null: false
+    t.string "us_size", null: false
+    t.string "uk_size", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "issues", force: :cascade do |t|
+    t.bigint "magazine_id", null: false
+    t.string "name", null: false
+    t.string "pictures_path"
+    t.date "release_date", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["magazine_id"], name: "index_issues_on_magazine_id"
+  end
+
+  create_table "magazines", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "name", null: false
+    t.string "website"
+    t.string "cover_picture_path"
+    t.text "biography"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "needles", force: :cascade do |t|
     t.string "metric"
@@ -59,6 +114,132 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_03_194752) do
     t.index ["user_id"], name: "index_patterns_on_user_id"
   end
 
+  create_table "patterns_categories", force: :cascade do |t|
+    t.bigint "pattern_id", null: false
+    t.bigint "category_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_patterns_categories_on_category_id"
+    t.index ["pattern_id"], name: "index_patterns_categories_on_pattern_id"
+  end
+
+  create_table "patterns_hooks", force: :cascade do |t|
+    t.bigint "pattern_id", null: false
+    t.bigint "hook_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hook_id"], name: "index_patterns_hooks_on_hook_id"
+    t.index ["pattern_id"], name: "index_patterns_hooks_on_pattern_id"
+  end
+
+  create_table "patterns_magazines", force: :cascade do |t|
+    t.bigint "pattern_id", null: false
+    t.bigint "magazine_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["magazine_id"], name: "index_patterns_magazines_on_magazine_id"
+    t.index ["pattern_id"], name: "index_patterns_magazines_on_pattern_id"
+  end
+
+  create_table "patterns_tags", force: :cascade do |t|
+    t.bigint "pattern_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pattern_id"], name: "index_patterns_tags_on_pattern_id"
+    t.index ["tag_id"], name: "index_patterns_tags_on_tag_id"
+  end
+
+  create_table "patterns_yarns", force: :cascade do |t|
+    t.bigint "pattern_id", null: false
+    t.bigint "yarn_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pattern_id"], name: "index_patterns_yarns_on_pattern_id"
+    t.index ["yarn_id"], name: "index_patterns_yarns_on_yarn_id"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "pattern_id", null: false
+    t.string "name"
+    t.string "status"
+    t.string "notes"
+    t.string "size"
+    t.decimal "stitches"
+    t.decimal "rows"
+    t.string "swatch_size"
+    t.string "gauge_pattern"
+    t.date "project_started"
+    t.date "project_finished"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "projects_categories", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "category_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_projects_categories_on_category_id"
+    t.index ["project_id"], name: "index_projects_categories_on_project_id"
+  end
+
+  create_table "projects_hooks", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "hook_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hook_id"], name: "index_projects_hooks_on_hook_id"
+    t.index ["project_id"], name: "index_projects_hooks_on_project_id"
+  end
+
+  create_table "projects_needles", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "needle_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["needle_id"], name: "index_projects_needles_on_needle_id"
+    t.index ["project_id"], name: "index_projects_needles_on_project_id"
+  end
+
+  create_table "projects_tags", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_projects_tags_on_project_id"
+    t.index ["tag_id"], name: "index_projects_tags_on_tag_id"
+  end
+
+  create_table "projects_yarns", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "yarn_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_projects_yarns_on_project_id"
+    t.index ["yarn_id"], name: "index_projects_yarns_on_yarn_id"
+  end
+
+  create_table "purchases", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "purchasable_type", null: false
+    t.bigint "purchasable_id", null: false
+    t.decimal "price", precision: 10, scale: 2, null: false
+    t.string "currency", default: "EUR", null: false
+    t.date "purchase_date", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["purchasable_type", "purchasable_id"], name: "index_purchases_on_purchasable"
+    t.index ["user_id"], name: "index_purchases_on_user_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -70,11 +251,100 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_03_194752) do
     t.string "jti", null: false
     t.string "username", null: false
     t.string "refresh_token"
+    t.string "name", default: "Anonymous", null: false
+    t.string "location"
+    t.string "language", default: "en", null: false
+    t.string "pronouns"
+    t.text "biography"
+    t.string "units", default: "metric", null: false
+    t.string "role", default: "user", null: false
+    t.string "website"
+    t.string "preferred_currency", default: "EUR", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  create_table "users_yarns", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "yarn_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_users_yarns_on_user_id"
+    t.index ["yarn_id"], name: "index_users_yarns_on_yarn_id"
+  end
+
+  create_table "yarns", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "weight"
+    t.decimal "meterage"
+    t.decimal "unit_weight"
+    t.string "gauge"
+    t.string "fibers"
+    t.string "texture"
+    t.boolean "machine_wash"
+    t.string "colors"
+    t.string "pictures_path"
+    t.string "dye"
+    t.string "origin"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "yarns_hooks", force: :cascade do |t|
+    t.bigint "yarn_id", null: false
+    t.bigint "hook_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hook_id"], name: "index_yarns_hooks_on_hook_id"
+    t.index ["yarn_id"], name: "index_yarns_hooks_on_yarn_id"
+  end
+
+  create_table "yarns_needles", force: :cascade do |t|
+    t.bigint "yarn_id", null: false
+    t.bigint "needle_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["needle_id"], name: "index_yarns_needles_on_needle_id"
+    t.index ["yarn_id"], name: "index_yarns_needles_on_yarn_id"
+  end
+
+  add_foreign_key "favorites", "users"
+  add_foreign_key "followers", "followers"
+  add_foreign_key "followers", "users"
+  add_foreign_key "issues", "magazines"
+  add_foreign_key "magazines", "users"
   add_foreign_key "patterns", "users"
+  add_foreign_key "patterns_categories", "categories"
+  add_foreign_key "patterns_categories", "patterns"
+  add_foreign_key "patterns_hooks", "hooks"
+  add_foreign_key "patterns_hooks", "patterns"
+  add_foreign_key "patterns_magazines", "magazines"
+  add_foreign_key "patterns_magazines", "patterns"
+  add_foreign_key "patterns_tags", "patterns"
+  add_foreign_key "patterns_tags", "tags"
+  add_foreign_key "patterns_yarns", "patterns"
+  add_foreign_key "patterns_yarns", "yarns"
+  add_foreign_key "projects", "patterns"
+  add_foreign_key "projects", "users"
+  add_foreign_key "projects_categories", "categories"
+  add_foreign_key "projects_categories", "projects"
+  add_foreign_key "projects_hooks", "hooks"
+  add_foreign_key "projects_hooks", "projects"
+  add_foreign_key "projects_needles", "needles"
+  add_foreign_key "projects_needles", "projects"
+  add_foreign_key "projects_tags", "projects"
+  add_foreign_key "projects_tags", "tags"
+  add_foreign_key "projects_yarns", "projects"
+  add_foreign_key "projects_yarns", "yarns"
+  add_foreign_key "purchases", "users"
+  add_foreign_key "users_yarns", "users"
+  add_foreign_key "users_yarns", "yarns"
+  add_foreign_key "yarns", "users"
+  add_foreign_key "yarns_hooks", "hooks"
+  add_foreign_key "yarns_hooks", "yarns"
+  add_foreign_key "yarns_needles", "needles"
+  add_foreign_key "yarns_needles", "yarns"
 end
