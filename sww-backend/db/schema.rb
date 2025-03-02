@@ -33,12 +33,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_01_170531) do
   end
 
   create_table "followers", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.bigint "followee_id", null: false
     t.bigint "follower_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["followee_id"], name: "index_followers_on_followee_id"
     t.index ["follower_id"], name: "index_followers_on_follower_id"
-    t.index ["user_id"], name: "index_followers_on_user_id"
   end
 
   create_table "hooks", force: :cascade do |t|
@@ -60,13 +60,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_01_170531) do
   end
 
   create_table "magazines", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "name", null: false
     t.string "website"
     t.string "cover_picture_path"
     t.text "biography"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_magazines_on_user_id"
   end
 
   create_table "needles", force: :cascade do |t|
@@ -160,8 +161,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_01_170531) do
   end
 
   create_table "projects", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "pattern_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "pattern_id", null: false
     t.string "name"
     t.string "status"
     t.string "notes"
@@ -174,6 +175,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_01_170531) do
     t.date "project_finished"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["pattern_id"], name: "index_projects_on_pattern_id"
+    t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "projects_categories", force: :cascade do |t|
@@ -276,7 +279,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_01_170531) do
   end
 
   create_table "yarns", force: :cascade do |t|
-    t.integer "user_id"
+    t.bigint "user_id", null: false
     t.string "weight"
     t.decimal "meterage"
     t.decimal "unit_weight"
@@ -291,6 +294,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_01_170531) do
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_yarns_on_user_id"
   end
 
   create_table "yarns_hooks", force: :cascade do |t|
@@ -312,8 +316,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_01_170531) do
   end
 
   add_foreign_key "favorites", "users"
-  add_foreign_key "followers", "followers"
-  add_foreign_key "followers", "users"
+  add_foreign_key "followers", "users", column: "followee_id"
+  add_foreign_key "followers", "users", column: "follower_id"
   add_foreign_key "issues", "magazines"
   add_foreign_key "magazines", "users"
   add_foreign_key "patterns", "users"

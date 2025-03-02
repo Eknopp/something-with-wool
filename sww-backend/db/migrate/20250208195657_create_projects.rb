@@ -1,8 +1,8 @@
 class CreateProjects < ActiveRecord::Migration[8.0]
   def change
     create_table :projects do |t|
-      t.integer :user, null: false, foreign_key: true
-      t.integer :pattern, null: false, foreign_key: true
+      t.references :user, null: false, foreign_key: true
+      t.references :pattern, null: false, foreign_key: true
       t.string :name
       t.string :status
       t.string :notes

@@ -38,7 +38,8 @@ class User < ApplicationRecord
   has_many :purchases
   # TODO: has many magazines as a user of role magazine_publisher
   has_many :magazines
-  has_many :followers
+  has_many :following, class_name: "Follower", foreign_key: "follwee_id"
+  has_many :followers, class_name: "Follower", foreign_key: "follower_id"
 
   validates :pronouns, inclusion: {in: %w[he/him she/her they/them], message: "%{value} is not a valid pronoun"}
   validates :units, inclusion: {in: %w[metric imperial], message: "%{value} is not a valid measuring unit"}
