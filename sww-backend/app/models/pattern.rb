@@ -1,5 +1,8 @@
 class Pattern < ApplicationRecord
+  require "config/valid_currencies"
+
   belongs_to :user
+
   has_many :projects
 
   has_many :patterns_needles
@@ -25,4 +28,5 @@ class Pattern < ApplicationRecord
   validates :size, inclusion: {in: %w[XS S M L XL XXL 3XL 4XL 5XL 6XL], message: "%{value} is not a valid size"}
   validates :difficulty_rating, inclusion: {in: 1..5, message: "%{value} is not a valid difficulty rating"}
   validates :overall_rating, inclusion: {in: 1..5, message: "%{value} is not a valid overall rating"}
+  validates :currency, inclusion: {in: VALID_CURRENCIES}
 end
