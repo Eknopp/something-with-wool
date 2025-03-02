@@ -20,6 +20,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_01_170531) do
     t.string "sub_category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["main_category"], name: "index_categories_on_main_category"
+    t.index ["type"], name: "index_categories_on_type"
   end
 
   create_table "favorites", force: :cascade do |t|
@@ -28,7 +30,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_01_170531) do
     t.bigint "favoritable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["favoritable_id"], name: "index_favorites_on_favoritable_id"
     t.index ["favoritable_type", "favoritable_id"], name: "index_favorites_on_favoritable"
+    t.index ["favoritable_type"], name: "index_favorites_on_favoritable_type"
     t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
@@ -57,6 +61,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_01_170531) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["magazine_id"], name: "index_issues_on_magazine_id"
+    t.index ["name"], name: "index_issues_on_name"
+    t.index ["release_date"], name: "index_issues_on_release_date"
   end
 
   create_table "magazines", force: :cascade do |t|
@@ -112,6 +118,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_01_170531) do
     t.integer "overall_rating"
     t.date "first_published_date"
     t.date "release_date"
+    t.index ["craft_type"], name: "index_patterns_on_craft_type"
+    t.index ["name"], name: "index_patterns_on_name"
     t.index ["user_id"], name: "index_patterns_on_user_id"
   end
 
@@ -233,7 +241,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_01_170531) do
     t.date "purchase_date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["purchasable_id"], name: "index_purchases_on_purchasable_id"
     t.index ["purchasable_type", "purchasable_id"], name: "index_purchases_on_purchasable"
+    t.index ["purchasable_type"], name: "index_purchases_on_purchasable_type"
     t.index ["user_id"], name: "index_purchases_on_user_id"
   end
 
@@ -241,6 +251,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_01_170531) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_tags_on_name"
   end
 
   create_table "users", force: :cascade do |t|
