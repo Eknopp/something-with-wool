@@ -2,7 +2,7 @@ class CreatePatterns < ActiveRecord::Migration[8.0]
   def change
     create_table :patterns do |t|
       t.timestamps
-      t.belongs_to :user, foreign_key: true, null: false
+      t.integer :user_id, null: false
       t.string :name, null: false
       t.string :craft_type, null: false
       t.float :price, null: false
@@ -27,5 +27,7 @@ class CreatePatterns < ActiveRecord::Migration[8.0]
       t.date :first_published_date
       t.date :release_date
     end
+
+    add_foreign_key :patterns, :users, column: :user_id
   end
 end

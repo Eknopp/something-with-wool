@@ -1,8 +1,8 @@
 class CreateProjects < ActiveRecord::Migration[8.0]
   def change
     create_table :projects do |t|
-      t.integer :user_id, null: false, foreign_key: true
-      t.integer :pattern_id, null: false, foreign_key: true
+      t.integer :user_id, null: false
+      t.integer :pattern_id, null: false
       t.string :name
       t.string :status
       t.string :notes
@@ -15,5 +15,8 @@ class CreateProjects < ActiveRecord::Migration[8.0]
       t.date :project_finished
       t.timestamps
     end
+
+    add_foreign_key :projects, :users, column: :user_id
+    add_foreign_key :projects, :patterns, column: :pattern_id
   end
 end
