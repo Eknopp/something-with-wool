@@ -36,8 +36,7 @@ class User < ApplicationRecord
   has_many :projects
   has_many :favorites
   has_many :purchases
-  # TODO: has many magazines as a user of role magazine_publisher
-  has_many :magazines
+  has_many :magazines, -> { where(role: "magazine_publisher") }
   has_many :following, class_name: "Follower", foreign_key: "follwee_id"
   has_many :followers, class_name: "Follower", foreign_key: "follower_id"
 
