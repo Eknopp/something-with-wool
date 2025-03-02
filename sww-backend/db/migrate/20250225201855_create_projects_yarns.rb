@@ -1,8 +1,8 @@
 class CreateProjectsYarns < ActiveRecord::Migration[8.0]
   def change
     create_table :projects_yarns do |t|
-      t.references :project_id, null: false
-      t.references :yarn_id, null: false
+      t.references :project, null: false
+      t.references :yarn, null: false
 
       t.timestamps
     end

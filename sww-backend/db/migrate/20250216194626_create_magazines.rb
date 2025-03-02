@@ -2,7 +2,6 @@ class CreateMagazines < ActiveRecord::Migration[8.0]
   def change
     create_table :magazines do |t|
       t.integer :user_id, null: false
-      t.integer :issue_id, null: false
       t.string :name, null: false
       t.string :website
       t.string :cover_picture_path
@@ -12,6 +11,5 @@ class CreateMagazines < ActiveRecord::Migration[8.0]
     end
 
     add_foreign_key :magazines, :users, column: :user_id
-    add_foreign_key :magazines, :issues, column: :issue_id
   end
 end
