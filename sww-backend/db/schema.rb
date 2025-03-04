@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_01_170531) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_04_144842) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -100,23 +100,22 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_01_170531) do
     t.string "craft_type", null: false
     t.float "price"
     t.string "currency"
-    t.string "overall_yarn_weight"
-    t.integer "nbr_stitches"
-    t.integer "nbr_rows"
-    t.integer "swatch_size"
+    t.string "overall_yarn_weight", null: false
+    t.integer "nbr_stitches", null: false
+    t.integer "nbr_rows", null: false
+    t.integer "swatch_size", null: false
     t.integer "repeats"
     t.string "gauge_pattern"
     t.integer "total_yardage"
     t.string "languages", default: ["en"], array: true
     t.string "sizes", default: [], array: true
     t.string "notes"
-    t.string "pictures_path"
-    t.string "pdf_path"
-    t.integer "view_count"
+    t.string "pictures_path", null: false
+    t.string "pdf_path", null: false
     t.integer "likes"
     t.integer "difficulty_rating"
     t.integer "overall_rating"
-    t.date "first_published_date"
+    t.date "first_published_date", null: false
     t.date "release_date"
     t.index ["craft_type"], name: "index_patterns_on_craft_type"
     t.index ["name"], name: "index_patterns_on_name"
@@ -291,20 +290,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_01_170531) do
 
   create_table "yarns", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "weight"
-    t.decimal "meterage"
-    t.decimal "unit_weight"
+    t.string "weight", null: false
+    t.decimal "meterage", null: false
+    t.decimal "unit_weight", null: false
     t.string "gauge"
-    t.string "fibers"
+    t.string "fibers", null: false
     t.string "texture"
     t.boolean "machine_wash"
-    t.string "colors"
     t.string "pictures_path"
     t.string "dye"
     t.string "origin"
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "colors", default: [], array: true
     t.index ["user_id"], name: "index_yarns_on_user_id"
   end
 

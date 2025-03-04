@@ -6,7 +6,6 @@ class CreatePatterns < ActiveRecord::Migration[8.0]
       t.string :name, null: false
       t.string :craft_type, null: false
       t.float :price, null: false
-      # TODO below and add the rest of relationship
       t.string :currency, null: false, default: "EUR"
       t.string :overall_yarn_weight
       t.integer :nbr_stitches
