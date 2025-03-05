@@ -5,7 +5,7 @@ Rails.application.routes.draw do
                                  registration: "signup"
                                },
     controllers: {
-      sessions: "api/v1/users/sessions",
-      registrations: "api/v1/users/registrations"
+      sessions: "v1/users/sessions",
+      registrations: "v1/users/registrations"
     }
 end

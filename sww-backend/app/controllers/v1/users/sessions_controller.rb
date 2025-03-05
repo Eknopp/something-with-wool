@@ -1,4 +1,4 @@
-class Api::V1::Users::SessionsController < Devise::SessionsController
+class V1::Users::SessionsController < Devise::SessionsController
   include ActionController::Cookies
   skip_before_action :authenticate_user!, only: [:create]
   respond_to :json
