@@ -1,5 +1,45 @@
+# == Schema Information
+#
+# Table name: patterns
+#
+#  id                   :bigint           not null, primary key
+#  craft_type           :string           not null
+#  currency             :string
+#  difficulty_rating    :integer
+#  first_published_date :date             not null
+#  gauge_pattern        :string
+#  languages            :string           default(["en"]), is an Array
+#  likes                :integer
+#  name                 :string           not null
+#  nbr_rows             :integer          not null
+#  nbr_stitches         :integer          not null
+#  notes                :string
+#  overall_rating       :integer
+#  overall_yarn_weight  :string           not null
+#  pdf_path             :string           not null
+#  pictures_path        :string           not null
+#  price                :float
+#  release_date         :date
+#  repeats              :integer
+#  sizes                :string           default([]), is an Array
+#  swatch_size          :integer          not null
+#  total_yardage        :integer
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  user_id              :bigint           not null
+#
+# Indexes
+#
+#  index_patterns_on_craft_type  (craft_type)
+#  index_patterns_on_name        (name)
+#  index_patterns_on_user_id     (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
 class Pattern < ApplicationRecord
-  require "config/valid_currencies"
+  require Rails.root.join("config", "valid_currencies")
 
   belongs_to :user
 

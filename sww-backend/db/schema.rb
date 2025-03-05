@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_04_144842) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_05_105811) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -84,14 +84,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_04_144842) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "needles_patterns", id: false, force: :cascade do |t|
-    t.bigint "pattern_id", null: false
-    t.bigint "needle_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["pattern_id", "needle_id"], name: "index_needles_patterns_on_pattern_id_and_needle_id"
-  end
-
   create_table "patterns", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -147,6 +139,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_04_144842) do
     t.datetime "updated_at", null: false
     t.index ["magazine_id"], name: "index_patterns_magazines_on_magazine_id"
     t.index ["pattern_id"], name: "index_patterns_magazines_on_pattern_id"
+  end
+
+  create_table "patterns_needles", force: :cascade do |t|
+    t.bigint "pattern_id", null: false
+    t.bigint "needle_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["needle_id"], name: "index_patterns_needles_on_needle_id"
+    t.index ["pattern_id"], name: "index_patterns_needles_on_pattern_id"
   end
 
   create_table "patterns_tags", force: :cascade do |t|
@@ -337,6 +338,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_04_144842) do
   add_foreign_key "patterns_hooks", "patterns"
   add_foreign_key "patterns_magazines", "magazines"
   add_foreign_key "patterns_magazines", "patterns"
+  add_foreign_key "patterns_needles", "patterns"
   add_foreign_key "patterns_tags", "patterns"
   add_foreign_key "patterns_tags", "tags"
   add_foreign_key "patterns_yarns", "patterns"

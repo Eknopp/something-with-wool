@@ -1,3 +1,24 @@
+# == Schema Information
+#
+# Table name: magazines
+#
+#  id                 :bigint           not null, primary key
+#  biography          :text
+#  cover_picture_path :string
+#  name               :string           not null
+#  website            :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  user_id            :bigint           not null
+#
+# Indexes
+#
+#  index_magazines_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
 class Magazine < ApplicationRecord
   has_many :patterns_magazines
   has_many :patterns, through: :patterns_magazines
