@@ -1,6 +1,10 @@
 class V1::Users::RegistrationsController < Devise::RegistrationsController
   respond_to :json
+
+  # Hiding linter, create is being used behind the scenes by devise
+  # rubocop:disable LexicallyScopedActionFilter
   before_action :configure_sign_up_params, only: [:create]
+  # rubocop:enable LexicallyScopedActionFilter
 
   def sign_up(resource_name, resource)
     sign_in resource, store: false

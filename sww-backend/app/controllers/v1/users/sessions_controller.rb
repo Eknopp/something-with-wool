@@ -1,6 +1,10 @@
 class V1::Users::SessionsController < Devise::SessionsController
   include ActionController::Cookies
+
+  # Hiding linter, create is being used behind the scenes by devise
+  # rubocop:disable LexicallyScopedActionFilter
   skip_before_action :authenticate_user!, only: [:create]
+  # rubocop:enable LexicallyScopedActionFilter
   respond_to :json
 
   private
