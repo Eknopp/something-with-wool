@@ -49,7 +49,7 @@ class User < ApplicationRecord
   has_many :following, class_name: "Follower", foreign_key: "follwee_id"
   has_many :followers, class_name: "Follower", foreign_key: "follower_id"
 
-  validates :pronouns, inclusion: {in: %w[he/him she/her they/them], message: "%{value} is not a valid pronoun"}
+  validates :pronouns, inclusion: {in: %w[he/him she/her they/them], message: "%{value} is not a valid pronoun"}, allow_nil: true
   validates :units, inclusion: {in: %w[metric imperial], message: "%{value} is not a valid measuring unit"}
   validates :role, inclusion: {in: %w[user yarn_disributor magazine_publisher shop admin], message: "%{value} is not a valid user role"}
 

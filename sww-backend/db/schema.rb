@@ -10,18 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_05_105811) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_06_184002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "categories", force: :cascade do |t|
-    t.string "type", null: false
-    t.string "main_category", null: false
-    t.string "sub_category"
+    t.string "category_level_2", null: false
+    t.string "category_level_1", null: false
+    t.string "category_level_3"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["main_category"], name: "index_categories_on_main_category"
-    t.index ["type"], name: "index_categories_on_type"
+    t.string "category_level_4"
+    t.index ["category_level_1"], name: "index_categories_on_category_level_1"
+    t.index ["category_level_2"], name: "index_categories_on_category_level_2"
   end
 
   create_table "favorites", force: :cascade do |t|

@@ -26,4 +26,7 @@ if !Rails.env.development?
   return
 end
 
-seed User, {email: "local@test.com"}, {password: "123456"}
+# Load seed files
+Rails.root.glob("db/seeds/*.rb").sort.each do |seed|
+  load seed
+end
