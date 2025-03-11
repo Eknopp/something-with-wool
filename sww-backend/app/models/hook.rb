@@ -3,6 +3,7 @@
 # Table name: hooks
 #
 #  id         :bigint           not null, primary key
+#  hook_type  :string
 #  metric_mm  :string           not null
 #  uk_size    :string           not null
 #  us_size    :string           not null

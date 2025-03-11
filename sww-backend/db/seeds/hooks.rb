@@ -1,0 +1,27 @@
+seed Hook, {hook_type: "Standard", metric_mm: "2.25", uk_size: "13", us_size: "B-1"}
+seed Hook, {hook_type: "Standard", metric_mm: "2.75", uk_size: "12", us_size: "C-2"}
+seed Hook, {hook_type: "Standard", metric_mm: "3.25", uk_size: "11", us_size: "D-3"}
+seed Hook, {hook_type: "Standard", metric_mm: "3.5", uk_size: "10", us_size: "E-4"}
+seed Hook, {hook_type: "Standard", metric_mm: "3.75", uk_size: "-", us_size: "F-5"}
+seed Hook, {hook_type: "Standard", metric_mm: "4.0", uk_size: "8", us_size: "G-6"}
+seed Hook, {hook_type: "Standard", metric_mm: "4.5", uk_size: "7", us_size: "7"}
+seed Hook, {hook_type: "Standard", metric_mm: "5.0", uk_size: "6", us_size: "H-8"}
+seed Hook, {hook_type: "Standard", metric_mm: "5.5", uk_size: "5", us_size: "I-9"}
+seed Hook, {hook_type: "Standard", metric_mm: "6.0", uk_size: "4", us_size: "J-10"}
+seed Hook, {hook_type: "Standard", metric_mm: "6.5", uk_size: "3", us_size: "K-10.5"}
+seed Hook, {hook_type: "Standard", metric_mm: "8.0", uk_size: "0", us_size: "L-11"}
+seed Hook, {hook_type: "Standard", metric_mm: "9.0", uk_size: "00", us_size: "M-13"}
+seed Hook, {hook_type: "Standard", metric_mm: "10.0", uk_size: "-", us_size: "N-15"}
+seed Hook, {hook_type: "Standard", metric_mm: "16.0", uk_size: "-", us_size: "P/Q"}
+seed Hook, {hook_type: "Standard", metric_mm: "19.0", uk_size: "-", us_size: "S"}
+
+seed Hook, {hook_type: "Steel", metric_mm: "0.6", uk_size: "-", us_size: "14"}
+seed Hook, {hook_type: "Steel", metric_mm: "0.75", uk_size: "-", us_size: "12"}
+seed Hook, {hook_type: "Steel", metric_mm: "1.0", uk_size: "-", us_size: "10"}
+seed Hook, {hook_type: "Steel", metric_mm: "1.25", uk_size: "-", us_size: "9"}
+seed Hook, {hook_type: "Steel", metric_mm: "1.5", uk_size: "-", us_size: "8"}
+seed Hook, {hook_type: "Steel", metric_mm: "1.75", uk_size: "-", us_size: "6"}
+seed Hook, {hook_type: "Steel", metric_mm: "2.0", uk_size: "-", us_size: "4"}
+seed Hook, {hook_type: "Steel", metric_mm: "2.25", uk_size: "-", us_size: "2"}
+seed Hook, {hook_type: "Steel", metric_mm: "2.75", uk_size: "-", us_size: "1"}
+seed Hook, {hook_type: "Steel", metric_mm: "3.5", uk_size: "-", us_size: "00"}
