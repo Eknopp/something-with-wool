@@ -35,4 +35,21 @@ class ApplicationController < ActionController::API
   def render_unauthorized(message)
     render json: {status: 401, message: message}, status: :unauthorized
   end
+
+  private def render_success(message, status_data, data)
+    body = {
+      status_kind: "success",
+      status_message: "#{controller_name}.#{message}",
+      status_data: status_data,
+      data: data
+    }
+
+    render json: body, status: :ok, serialize: false
+  end
+
+  private def render_error(error)
+    Rails.logger.error(error.message)
+    Rails.logger.error(error.backtrace.join("\n"))
+    render_unprocessable_entity("general.error", error.message)
+  end
 end

@@ -8,4 +8,9 @@ Rails.application.routes.draw do
       sessions: "v1/users/sessions",
       registrations: "v1/users/registrations"
     }
+
+  namespace :v1 do
+    resources :patterns
+    resources :projects
+  end
 end

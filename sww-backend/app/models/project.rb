@@ -45,4 +45,6 @@ class Project < ApplicationRecord
   has_many :needles, through: :projects_needles
 
   validates :status, inclusion: {in: %w[in_queue in_progress finished], message: "%{value} is not a valid status"}
+  # TODO: validation where project_started cannot have a value if status is in_queue
+  # TODO: validation where project_finished cannot have a value if status is not finished
 end
