@@ -24,8 +24,8 @@
 #  fk_rails_...  (needle_id => needles.id)
 #  fk_rails_...  (yarn_id => yarns.id)
 #
-one: {}
-# column: value
-#
-two: {}
+# one: {}
+# # column: value
+# #
+# two: {}
 # column: value

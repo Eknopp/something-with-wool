@@ -24,8 +24,10 @@
 #  fk_rails_...  (followee_id => users.id)
 #  fk_rails_...  (follower_id => users.id)
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+one: 
+  followee_id: <%= User.find_by(username: 'userone').id %>
+  follower_id: <%= User.find_by(username: 'usertwo').id %>
+
+two:
+  followee_id: <%= User.find_by(username: 'usertwo').id %>
+  follower_id: <%= User.find_by(username: 'userone').id %>

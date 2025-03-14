@@ -37,13 +37,13 @@
 #  index_users_on_username              (username) UNIQUE
 #
 one:
-  email: "one@example.com"
-  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
-  username: "userone"
-  jti: "jti_one"
+  email: 'one@example.com'
+  encrypted_password: 'password'
+  username: 'userone'
+  jti: '1234567890'
 
 two:
-  email: "two@example.com"
-  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
-  username: "usertwo"
-  jti: "jti_two"
+  email: 'two@example.com'
+  encrypted_password: 'password'
+  username: 'usertwo'
+  jti: 'jti_two'

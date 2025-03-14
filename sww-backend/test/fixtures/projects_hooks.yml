@@ -20,10 +20,10 @@
 #  fk_rails_...  (hook_id => hooks.id)
 #  fk_rails_...  (project_id => projects.id)
 #
-one:
-  project: one
-  hook: one
+# one:
+#   project: one
+#   hook: one
 
-two:
-  project: two
-  hook: two
+# two:
+#   project: two
+#   hook: two

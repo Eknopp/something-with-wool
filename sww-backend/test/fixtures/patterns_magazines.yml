@@ -20,10 +20,10 @@
 #  fk_rails_...  (magazine_id => magazines.id)
 #  fk_rails_...  (pattern_id => patterns.id)
 #
-one:
-  pattern: one
-  magazine: one
+# one:
+#   pattern: one
+#   magazine: one
 
-two:
-  pattern: two
-  magazine: two
+# two:
+#   pattern: two
+#   magazine: two

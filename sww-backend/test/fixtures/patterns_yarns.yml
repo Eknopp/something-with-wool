@@ -20,10 +20,10 @@
 #  fk_rails_...  (pattern_id => patterns.id)
 #  fk_rails_...  (yarn_id => yarns.id)
 #
-one:
-  pattern: one
-  yarn: one
+# one:
+#   pattern: one
+#   yarn: one
 
-two:
-  pattern: two
-  yarn: two
+# two:
+#   pattern: two
+#   yarn: two

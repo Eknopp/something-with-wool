@@ -44,8 +44,8 @@
 #
 #  fk_rails_...  (user_id => users.id)
 #
-one: {}
-# column: value
-#
-two: {}
+# one: {}
+# # column: value
+# #
+# two: {}
 # column: value

@@ -20,10 +20,10 @@
 #  fk_rails_...  (project_id => projects.id)
 #  fk_rails_...  (tag_id => tags.id)
 #
-one:
-  project: one
-  tag: one
+# one:
+#   project: one
+#   tag: one
 
-two:
-  project: two
-  tag: two
+# two:
+#   project: two
+#   tag: two

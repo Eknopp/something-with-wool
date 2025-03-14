@@ -20,10 +20,10 @@
 #  fk_rails_...  (needle_id => needles.id)
 #  fk_rails_...  (project_id => projects.id)
 #
-one:
-  project: one
-  needle: one
+# one:
+#   project: one
+#   needle: one
 
-two:
-  project: two
-  needle: two
+# two:
+#   project: two
+#   needle: two

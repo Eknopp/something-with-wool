@@ -20,10 +20,10 @@
 #  fk_rails_...  (pattern_id => patterns.id)
 #  fk_rails_...  (tag_id => tags.id)
 #
-one:
-  pattern: one
-  tag: one
+# one:
+#   pattern: one
+#   tag: one
 
-two:
-  pattern: two
-  tag: two
+# two:
+#   pattern: two
+#   tag: two

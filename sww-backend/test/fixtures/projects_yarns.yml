@@ -20,12 +20,10 @@
 #  fk_rails_...  (project_id => projects.id)
 #  fk_rails_...  (yarn_id => yarns.id)
 #
-one:
-  project: one
-  yarn: one
-  amount: 1.5
+# one:
+#   project: one
+#   yarn: one
 
-two:
-  project: two
-  yarn: two
-  amount: 1.5
+# two:
+#   project: two
+#   yarn: two

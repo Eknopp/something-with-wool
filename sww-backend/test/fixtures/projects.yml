@@ -34,8 +34,8 @@
 #  fk_rails_...  (pattern_id => patterns.id)
 #  fk_rails_...  (user_id => users.id)
 #
-one: {}
-# column: value
-#
-two: {}
+# one: {}
+# # column: value
+# #
+# two: {}
 # column: value

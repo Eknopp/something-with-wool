@@ -26,8 +26,8 @@
 #
 #  fk_rails_...  (magazine_id => magazines.id)
 #
-one: {}
-# column: value
-#
-two: {}
+# one: {}
+# # column: value
+# #
+# two: {}
 # column: value
