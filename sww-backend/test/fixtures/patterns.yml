@@ -9,6 +9,7 @@
 # Table name: patterns
 #
 #  id                   :bigint           not null, primary key
+#  archived_at          :datetime
 #  craft_type           :string           not null
 #  currency             :string
 #  difficulty_rating    :integer

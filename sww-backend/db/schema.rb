@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_11_084251) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_15_081841) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -111,6 +111,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_11_084251) do
     t.integer "overall_rating"
     t.date "first_published_date", null: false
     t.date "release_date"
+    t.datetime "archived_at"
     t.index ["craft_type"], name: "index_patterns_on_craft_type"
     t.index ["name"], name: "index_patterns_on_name"
     t.index ["user_id"], name: "index_patterns_on_user_id"
