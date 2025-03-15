@@ -1,4 +1,5 @@
 class V1::Users::RegistrationsController < Devise::RegistrationsController
+  include ActionController::Cookies
   respond_to :json
 
   # Hiding linter, create is being used behind the scenes by devise
@@ -30,6 +31,7 @@ class V1::Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:username])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:id, :biography, :email, :encrypted_password, :language,
+      :location, :name, :preferred_currency, :pronouns, :role, :units, :username, :website])
   end
 end
