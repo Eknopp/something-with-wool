@@ -10,7 +10,12 @@ Rails.application.routes.draw do
     }
 
   namespace :v1 do
-    resources :patterns
+    resources :patterns do
+      member do
+        patch :archive
+      end
+    end
+
     resources :projects
   end
 end

@@ -64,6 +64,13 @@ class Pattern < ApplicationRecord
   has_many :favorites, as: :favoritable
   has_many :purchases, as: :purchasable
 
+  scope :active, -> { where(archived_at: nil) }
+  scope :archived, -> { where.not(archived_at: nil) }
+
+  def archive!
+    update(archived_at: Time.zone.now)
+  end
+
   validates :craft_type, inclusion: {in: %w[knitting crochet weaving], message: "%{value} is not a valid craft type"}
   validates :overall_yarn_weight, inclusion: {in: %w[lace super_fine fine light], message: "%{value} is not a valid overal yarn weight"}
   validates :sizes, inclusion: {in: %w[XS S M L XL XXL 3XL 4XL 5XL 6XL], message: "%{value} is not a valid size"}

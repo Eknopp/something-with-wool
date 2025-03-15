@@ -2,7 +2,7 @@ class V1::PatternsController < ApplicationController
   include ActionController::Cookies
 
   def index
-    render_success("index.success", nil, PatternSerializer.new(Pattern.order(release_date: :desc)).serializable_hash)
+    render_success("index.success", nil, PatternSerializer.new(Pattern.active.order(release_date: :desc)).serializable_hash)
   end
 
   def show
@@ -32,13 +32,13 @@ class V1::PatternsController < ApplicationController
     end
   end
 
-  def destroy
+  def archive
     pattern = Pattern.find(params[:id])
 
-    if pattern.destroy
-      render_success("destroy.success", {id: pattern.id}, {})
+    if pattern.archive!
+      render_success("archive.success", nil, PatternSerializer.new(pattern).serializable_hash)
     else
-      render_unprocessable_entity("destroy.error", pattern.errors)
+      render_unprocessable_entity("archive.error", pattern.errors)
     end
   end
 
