@@ -17,5 +17,6 @@ Rails.application.routes.draw do
     end
 
     resources :projects
+    resources :yarns
   end
 end
