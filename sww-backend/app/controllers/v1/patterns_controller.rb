@@ -35,7 +35,7 @@ class V1::PatternsController < ApplicationController
   def archive
     pattern = Pattern.find(params[:id])
 
-    if pattern.archive!
+    if pattern.archive
       render_success("archive.success", nil, PatternSerializer.new(pattern).serializable_hash)
     else
       render_unprocessable_entity("archive.error", pattern.errors)
