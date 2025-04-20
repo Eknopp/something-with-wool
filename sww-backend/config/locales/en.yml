@@ -28,4 +28,51 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  patterns:
+    create:
+      success: 'Pattern successfully created'
+      failure: 'Failed to create pattern'
+    update:
+      success: 'Pattern successfully updated'
+      failure: 'Failed to update pattern'
+    index:
+      success: 'Patterns successfully loaded'
+      failure: 'Failed to load patterns'
+    show:
+      success: 'Pattern successfully loaded'
+      failure: 'Failed to load pattern'
+    archive:
+      success: 'Pattern successfully archived'
+      failure: 'Failed to archive pattern'
+  projects:
+    create:
+      success: 'Project successfully created'
+      failure: 'Failed to create project'
+    update:
+      success: 'Project successfully updated'
+      failure: 'Failed to update project'
+    index:
+      success: 'Projects successfully loaded'
+      failure: 'Failed to load projects'
+    show:
+      success: 'Project successfully loaded'
+      failure: 'Failed to load project'
+    destroy:
+      success: 'Project successfully deleted'
+      failure: 'Failed to delete project'
+  yarns:
+    create:
+      success: 'Yarn successfully created'
+      failure: 'Failed to create yarn'
+    update:
+      success: 'Yarn successfully updated'
+      failure: 'Failed to update yarn'
+    index:
+      success: 'Yarns successfully loaded'
+      failure: 'Failed to load yarns'
+    show:
+      success: 'Yarn successfully loaded'
+      failure: 'Failed to load yarn'
+    destroy:
+      success: 'Yarn successfully deleted'
+      failure: 'Failed to delete yarn'

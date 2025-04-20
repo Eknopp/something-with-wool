@@ -21,4 +21,15 @@
 class PatternsYarn < ApplicationRecord
   belongs_to :pattern
   belongs_to :yarn
+
+  validate :color_must_be_in_yarn_colors
+
+  private
+
+  def color_must_be_in_yarn_colors
+    return if yarn.colors.include?(color)
+
+    errors.add(:color, "must be one of the yarn's available colors, but the color '#{color}' does not exist for yarn of id #{yarn.id}")
+    raise ActiveRecord::RecordInvalid.new(self)
+  end
 end

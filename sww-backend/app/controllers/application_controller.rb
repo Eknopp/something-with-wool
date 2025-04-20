@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::API
+  include ActionView::Helpers::TranslationHelper
   before_action :authenticate_user!
 
   private
@@ -39,7 +40,7 @@ class ApplicationController < ActionController::API
   private def render_success(message, status_data, data)
     body = {
       status_kind: "success",
-      status_message: "#{controller_name}.#{message}",
+      status_message: t("#{controller_name}.#{message}"),
       status_data: status_data,
       data: data
     }
@@ -47,9 +48,19 @@ class ApplicationController < ActionController::API
     render json: body, status: :ok, serialize: false
   end
 
-  private def render_error(error)
-    Rails.logger.error(error.message)
-    Rails.logger.error(error.backtrace.join("\n"))
-    render_unprocessable_entity("general.error", error.message)
+  private
+
+  def render_unprocessable_entity(message, data)
+    if ActiveModel::Errors === data
+      data = data.group_by_attribute.transform_values do |errors|
+        errors.map(&:type)
+      end
+    end
+    body = {
+      status_kind: "error",
+      status_message: t("#{controller_name}.#{message}"),
+      data: data
+    }
+    render json: body, status: :unprocessable_entity, serialize: false
   end
 end

@@ -18,7 +18,7 @@ class V1::ProjectsController < ApplicationController
     if project.save
       render_success("create.success", ProjectSerializer.new(project).serializable_hash, nil)
     else
-      render_error("create.failure", project.errors, nil)
+      render_unprocessable_entity("create.failure", project.errors)
     end
   end
 
@@ -28,7 +28,7 @@ class V1::ProjectsController < ApplicationController
     if project.update(project_params)
       render_success("update.success", ProjectSerializer.new(project).serializable_hash, nil)
     else
-      render_error("update.failure", project.errors, nil)
+      render_unprocessable_entity("update.failure", project.errors)
     end
   end
 

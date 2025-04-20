@@ -18,7 +18,7 @@ class V1::YarnsController < ApplicationController
     if yarn.save
       render_success("create.success", YarnSerializer.new(yarn).serializable_hash, nil)
     else
-      render_error("create.failure", yarn.errors, nil)
+      render_unprocessable_entity("create.failure", yarn.errors)
     end
   end
 
@@ -28,7 +28,7 @@ class V1::YarnsController < ApplicationController
     if yarn.update(yarn_params)
       render_success("update.success", YarnSerializer.new(yarn).serializable_hash, nil)
     else
-      render_error("update.failure", yarn.errors, nil)
+      render_unprocessable_entity("update.failure", yarn.errors)
     end
   end
 
