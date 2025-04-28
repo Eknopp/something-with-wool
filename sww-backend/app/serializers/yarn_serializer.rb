@@ -3,12 +3,14 @@
 # Table name: yarns
 #
 #  id            :bigint           not null, primary key
+#  brand_name    :string
 #  colors        :string           default([]), is an Array
 #  dye           :string
 #  fibers        :string           not null
 #  gauge         :string
 #  machine_wash  :boolean
 #  meterage      :decimal(, )      not null
+#  name          :string           not null
 #  notes         :text
 #  origin        :string
 #  pictures_path :string
@@ -30,5 +32,6 @@
 class YarnSerializer
   include JSONAPI::Serializer
   attributes :id, :colors, :dye, :fibers, :gauge, :machine_wash, :meterage, :notes,
-    :origin, :pictures_path, :texture, :unit_weight, :weight, :created_at, :updated_at, :user_id
+    :origin, :pictures_path, :texture, :unit_weight, :weight, :created_at, :updated_at, :user_id,
+    :name, :brand_name
 end

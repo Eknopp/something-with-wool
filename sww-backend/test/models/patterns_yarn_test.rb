@@ -3,6 +3,7 @@
 # Table name: patterns_yarns
 #
 #  id         :bigint           not null, primary key
+#  color      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  pattern_id :bigint           not null

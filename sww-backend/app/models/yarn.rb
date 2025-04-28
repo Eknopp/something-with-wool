@@ -3,12 +3,14 @@
 # Table name: yarns
 #
 #  id            :bigint           not null, primary key
+#  brand_name    :string
 #  colors        :string           default([]), is an Array
 #  dye           :string
 #  fibers        :string           not null
 #  gauge         :string
 #  machine_wash  :boolean
 #  meterage      :decimal(, )      not null
+#  name          :string           not null
 #  notes         :text
 #  origin        :string
 #  pictures_path :string
@@ -42,4 +44,5 @@ class Yarn < ApplicationRecord
   has_many :favorites, as: :favoritable
 
   validates :weight, inclusion: {in: %w[Lace Super\ Fine Fine Light]}
+  validates :name, uniqueness: {scope: :brand_name, case_sensitive: false, message: "should be unique within the same brand"}
 end

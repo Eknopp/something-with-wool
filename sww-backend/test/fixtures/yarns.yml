@@ -9,12 +9,14 @@
 # Table name: yarns
 #
 #  id            :bigint           not null, primary key
+#  brand_name    :string
 #  colors        :string           default([]), is an Array
 #  dye           :string
 #  fibers        :string           not null
 #  gauge         :string
 #  machine_wash  :boolean
 #  meterage      :decimal(, )      not null
+#  name          :string           not null
 #  notes         :text
 #  origin        :string
 #  pictures_path :string
