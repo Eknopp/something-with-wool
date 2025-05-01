@@ -12,7 +12,7 @@ class V1::Users::SessionsController < Devise::SessionsController
   def respond_with(resource, _opts = {})
     refresh_token = generate_refresh_token(resource)
     resource.update(refresh_token: refresh_token)
-    cookies.signed[:refresh_token] = {value: refresh_token, httponly: true, expires: 1.month.from_now, secure: true}
+    cookies.signed[:refresh_token] = {value: refresh_token, httponly: true, expires: 1.month.from_now, secure: Rails.env.production?}
 
     render json: {
       status: {code: 200, message: "Logged in successfully."},

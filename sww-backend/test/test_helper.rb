@@ -12,6 +12,14 @@ module ActiveSupport
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
 
-    # Add more helper methods to be used by all tests here...
+    def login_user(user, password)
+      user.password = password
+      user.save!
+
+      post user_session_path, params: {user: {email: user.email, password: password}}, as: :json
+      assert_response :success
+
+      @cookies = @response.cookies
+    end
   end
 end

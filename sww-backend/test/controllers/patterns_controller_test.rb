@@ -2,10 +2,12 @@ require "test_helper"
 
 class PatternsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
+  fixtures :users, :followers
+
   setup do
-    # TODO: might need to catch cookies when signing in and add to requests
     @user = users(:one)
-    sign_in @user
+    login_user(@user, "password123")
+
     @pattern_params = {
       name: "Test Pattern",
       difficulty_rating: 3,
