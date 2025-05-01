@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::API
   include ActionView::Helpers::TranslationHelper
+  include TokenResponse
+
   before_action :authenticate_user!
 
   private
@@ -10,27 +12,34 @@ class ApplicationController < ActionController::API
 
   def authenticate_user!
     if cookies[:access_token].present?
-      super
+      begin
+        access_token_secret_key = SecretKeysConfiguration::ACCESS_TOKEN_SECRET
+        decoded_token = JWT.decode(cookies[:access_token], access_token_secret_key).first
+        @current_user = User.find_by(id: decoded_token["user_id"])
+
+        if @current_user.nil?
+          render_unauthorized("Invalid access token.")
+        end
+      rescue JWT::ExpiredSignature
+        render_unauthorized("Access token has expired.")
+      rescue JWT::DecodeError
+        render_unauthorized("Invalid access token.")
+      end
     elsif cookies.signed[:refresh_token].present?
       user = User.find_by(refresh_token: cookies.signed[:refresh_token])
       if user&.refresh_token_valid?
-        sign_in(user)
-        update_refresh_token(user)
+        begin
+          # Call Warden Manager to renew cookies (devise.rb)
+          sign_in(user)
+        rescue => e
+          Rails.logger.error(`Failed to refresh cookies: #{e.message}`)
+        end
       else
         render_unauthorized("Couldn't find user or an active refresh token.")
       end
     else
       render_unauthorized("Couldn't find an active session.")
     end
-  end
-
-  def update_refresh_token(user)
-    return unless user
-    exp = 1.month.from_now.to_i
-    refresh_token_secret_key = SecretKeysConfiguration::REFRESH_TOKEN_SECRET
-    new_refresh_token = JWT.encode({user_id: user.id, exp: exp}, refresh_token_secret_key)
-    user.update(refresh_token: new_refresh_token)
-    cookies.signed[:refresh_token] = {value: new_refresh_token, httponly: true, expires: 1.month.from_now}
   end
 
   def render_unauthorized(message)

@@ -9,10 +9,9 @@ class V1::Users::SessionsController < Devise::SessionsController
 
   private
 
+  # On login
   def respond_with(resource, _opts = {})
-    refresh_token = generate_refresh_token(resource)
-    resource.update(refresh_token: refresh_token)
-    cookies.signed[:refresh_token] = {value: refresh_token, httponly: true, expires: 1.month.from_now, secure: Rails.env.production?}
+    generate_and_set_tokens(resource)
 
     render json: {
       status: {code: 200, message: "Logged in successfully."},
@@ -20,21 +19,22 @@ class V1::Users::SessionsController < Devise::SessionsController
     }, status: :ok
   end
 
+  # On logout
   def respond_to_on_destroy
     authenticate_user!
     if current_user
       current_user.update(refresh_token: nil)
       cookies.delete(:refresh_token)
+      cookies.delete(:access_token)
       render json: {
         status: 200,
         message: "Logged out successfully"
       }, status: :ok
+    else
+      render json: {
+        status: 401,
+        message: "User not logged in"
+      }, status: :unauthorized
     end
   end
-end
-
-def generate_refresh_token(resource)
-  exp = 1.month.from_now.to_i
-  refresh_token_secret_key = SecretKeysConfiguration::REFRESH_TOKEN_SECRET
-  JWT.encode({user_id: resource.id, exp: exp}, refresh_token_secret_key)
 end

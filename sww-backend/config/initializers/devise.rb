@@ -282,6 +282,46 @@ Devise.setup do |config|
   #   manager.default_strategies(scope: :user).unshift :some_external_strategy
   # end
 
+  # For generating a new access_token when expired, with a valid refresh_token
+  # Warden::Manager.after_set_user do |user, auth, opts|
+  #   if auth.cookies.signed[:refresh_token].present? && !auth.cookies[:access_token].present?
+  #     if user.refresh_token_valid?
+  #       # TODO: check that refresh token is of user through DB
+  #       exp = 15.minutes.from_now.to_i
+  #       access_token_secret_key = SecretKeysConfiguration::ACCESS_TOKEN_SECRET
+  #       new_access_token = JWT.encode({user_id: user.id, exp: exp}, access_token_secret_key)
+  #       auth.cookies[:access_token] = {value: new_access_token, httponly: true, expires: 15.minutes.from_now}
+  #     end
+  #   end
+  # end
+
+  # Generate new tokens in cookies when access_token is expired (triggered by `sign_in` method)
+  Warden::Manager.after_set_user do |user, auth, opts|
+    if auth.cookies.signed[:refresh_token].present? && !auth.cookies[:access_token].present?
+      if user.refresh_token_valid?
+        # Generate a new access token
+        exp = 15.minutes.from_now.to_i
+        # random jti for renwal of JWT numbers if exp is the same as previous one
+        jti = SecureRandom.uuid
+        access_token_secret_key = SecretKeysConfiguration::ACCESS_TOKEN_SECRET
+        new_access_token = JWT.encode({user_id: user.id, exp: exp, jti: jti}, access_token_secret_key)
+
+        # Generate a new refresh token
+        refresh_exp = 1.month.from_now.to_i
+        # random jti for renwal of JWT numbers if exp is the same as previous one
+        refresh_jti = SecureRandom.uuid
+        refresh_token_secret_key = SecretKeysConfiguration::REFRESH_TOKEN_SECRET
+        new_refresh_token = JWT.encode({user_id: user.id, exp: refresh_exp, jti: refresh_jti}, refresh_token_secret_key)
+
+        # Set the new cookies
+        auth.cookies[:access_token] = {value: new_access_token, httponly: true, expires: 15.minutes.from_now, same_site: :strict}
+        auth.cookies[:refresh_token] = {value: new_refresh_token, httponly: true, expires: 1.month.from_now}
+      else
+        Rails.logger.error("Invalid refresh token for user #{user.id}")
+      end
+    end
+  end
+
   # ==> Mountable engine configurations
   # When using Devise inside an engine, let's call it `MyEngine`, and this engine
   # is mountable, there are some extra configurations to be taken into account.
@@ -310,19 +350,4 @@ Devise.setup do |config|
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
-
-  config.jwt do |jwt|
-    # TODO: Change to use a separate key
-    jwt.secret = SecretKeysConfiguration::ACCESS_TOKEN_SECRET
-    jwt.dispatch_requests = [
-      ["POST", %r{^/login$}]
-    ]
-    jwt.revocation_requests = [
-      ["DELETE", %r{^/logout$}]
-    ]
-    jwt.expiration_time = 15.minutes.to_i
-  end
-  config.jwt_cookie do |jwt_cookie|
-    jwt_cookie.name = "access_token"
-  end
 end
