@@ -45,8 +45,50 @@
 #
 #  fk_rails_...  (user_id => users.id)
 #
-# one: {}
-# # column: value
-# #
-# two: {}
-# column: value
+one:
+  name: 'Basic Scarf'
+  craft_type: 'knitting'
+  currency: 'USD'
+  difficulty_rating: 2
+  first_published_date: 2021-01-01
+  gauge_pattern: '20 sts and 28 rows = 4 inches in Stockinette Stitch'
+  languages: ['en']
+  likes: 10
+  nbr_rows: 100
+  nbr_stitches: 20
+  notes: 'A simple scarf pattern for beginners.'
+  overall_rating: 4
+  overall_yarn_weight: 'lace'
+  pdf_path: '/patterns/basic_scarf.pdf'
+  pictures_path: '/patterns/basic_scarf.jpg'
+  price: 5.0
+  release_date: 2021-01-01
+  repeats: 1
+  sizes: ['XS', 'S', 'M', 'L', 'XL']
+  swatch_size: 4
+  total_yardage: 200
+  user: one
+
+two:
+  name: 'Elegant Shawl'
+  craft_type: 'weaving'
+  currency: 'GBP'
+  difficulty_rating: 4
+  first_published_date: 2021-04-01
+  gauge_pattern: '22 sts and 30 rows = 4 inches in Lace Weave'
+  languages: ['en']
+  likes: 15
+  nbr_rows: 150
+  nbr_stitches: 25
+  notes: 'An elegant shawl pattern for intermediate weavers.'
+  overall_rating: 4
+  overall_yarn_weight: 'light'
+  pdf_path: '/patterns/elegant_shawl.pdf'
+  pictures_path: '/patterns/elegant_shawl.jpg'
+  price: 8.0
+  release_date: 2021-04-01
+  repeats: 3
+  sizes: ['XS', 'L', 'XXL']
+  swatch_size: 4
+  total_yardage: 300
+  user: two

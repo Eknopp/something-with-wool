@@ -48,4 +48,37 @@ class PatternsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_response :unprocessable_entity
   end
+
+  test "should get index" do
+    get v1_patterns_url
+    assert_response :success
+  end
+
+  test "should show pattern" do
+    pattern = patterns(:one)
+    get v1_pattern_url(pattern)
+    assert_response :success
+  end
+
+  test "should update pattern" do
+    pattern = patterns(:one)
+    updated_params = {name: "Updated Pattern Name"}
+
+    patch v1_pattern_url(pattern), params: {pattern: updated_params}
+    assert_response :success
+
+    pattern.reload
+    assert_equal "Updated Pattern Name", pattern.name
+  end
+
+  # TODO:
+  # test "should archive pattern" do
+  #   pattern = patterns(:one)
+
+  #   patch archive_v1_pattern_url(pattern)
+  #   assert_response :success
+
+  #   pattern.reload
+  #   assert_not_nil pattern.archived_at
+  # end
 end
