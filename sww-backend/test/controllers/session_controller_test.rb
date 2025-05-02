@@ -69,7 +69,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unauthorized
   end
 
-  test "should set a new access_token with only refresh_token" do
+  test "should set a new access_token and refresh_token with only refresh_token" do
     login_user(@user, @password)
     assert_response :success
 
@@ -78,7 +78,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert refresh_token.present?
     assert access_token.present?
 
-    # Expire the access_token cookie
+    #  Expire access_token
     cookies["access_token"] = {
       value: access_token,
       expires: 1.second.ago
@@ -88,20 +88,129 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     post v1_patterns_url, params: {pattern: create_pattern}, headers: {"Cookie" => "refresh_token=#{refresh_token}"}
     assert_response :success
 
-    # Check if a new access_token is set
+    # Check if a new access_token and refresh_token is set
+    new_access_token = response.cookies["access_token"]
+    new_refresh_toen = response.cookies["refresh_token"]
+    assert new_access_token.present?
+    refute_equal access_token, new_access_token
+    refute_equal refresh_token, new_refresh_toen
+  end
+
+  test "should return unauthorized with expired access_token and refresh_token" do
+    login_user(@user, @password)
+    assert_response :success
+
+    refresh_token = response.cookies["refresh_token"]
+    access_token = response.cookies["access_token"]
+    assert refresh_token.present?
+    assert access_token.present?
+
+    # Expire both access_token and refresh_token cookies
+    cookies["access_token"] = {
+      value: access_token,
+      expires: 1.second.ago
+    }
+    cookies["refresh_token"] = {
+      value: refresh_token,
+      expires: 1.second.ago
+    }
+
+    # Simulate a request with expired tokens
+    post v1_patterns_url, params: {pattern: create_pattern}
+    assert_response :unauthorized
+  end
+
+  test "should log in, log out, and log in again with different JWTs" do
+    # First login
+    login_user(@user, @password)
+    assert_response :success
+    first_access_token = response.cookies["access_token"]
+    first_refresh_token = response.cookies["refresh_token"]
+    assert first_access_token.present?
+    assert first_refresh_token.present?
+
+    # Logout
+    delete destroy_user_session_url, headers: {"Cookie" => "access_token=#{first_access_token}; refresh_token=#{first_refresh_token}"}
+    assert_response :success
+
+    # Second login
+    login_user(@user, @password)
+    assert_response :success
+    second_access_token = response.cookies["access_token"]
+    second_refresh_token = response.cookies["refresh_token"]
+    assert second_access_token.present?
+    assert second_refresh_token.present?
+
+    # Ensure tokens are different
+    refute_equal first_access_token, second_access_token
+    refute_equal first_refresh_token, second_refresh_token
+  end
+
+  test "should log out with only access_token" do
+    login_user(@user, @password)
+    assert_response :success
+    access_token = response.cookies["access_token"]
+    refresh_token = response.cookies["refresh_token"]
+    assert access_token.present?
+    assert refresh_token.present?
+
+    # Logout with only access_token
+    delete destroy_user_session_url, headers: {"Cookie" => "access_token=#{access_token}"}
+    assert_response :success
+
+    # Ensure cookies are cleared
+    assert_nil response.cookies["access_token"]
+    assert_nil response.cookies["refresh_token"]
+  end
+
+  test "should log out with only refresh_token" do
+    login_user(@user, @password)
+    assert_response :success
+    access_token = response.cookies["access_token"]
+    refresh_token = response.cookies["refresh_token"]
+    assert access_token.present?
+    assert refresh_token.present?
+
+    # Logout with only refresh_token
+    delete destroy_user_session_url, headers: {"Cookie" => "refresh_token=#{refresh_token}"}
+    assert_response :success
+
+    # Ensure cookies are cleared
+    assert_nil response.cookies["access_token"]
+    assert_nil response.cookies["refresh_token"]
+  end
+
+  test "should log out after new access token and refresh token generation" do
+    login_user(@user, @password)
+    assert_response :success
+
+    refresh_token = response.cookies["refresh_token"]
+    access_token = response.cookies["access_token"]
+    assert refresh_token.present?
+    assert access_token.present?
+
+    # Expire access_token
+    cookies["access_token"] = {
+      value: access_token,
+      expires: 1.second.ago
+    }
+
+    # Generate a new access token using refresh_token
+    post v1_patterns_url, params: {pattern: create_pattern}, headers: {"Cookie" => "refresh_token=#{refresh_token}"}
+    assert_response :success
+
     new_access_token = response.cookies["access_token"]
     assert new_access_token.present?
     refute_equal access_token, new_access_token
-  end
 
-  # test that with refresh token only, a new access_token is set.
-  # test logout with only access_token
-  # test logout with only refresh_token
-  # logout after new access token generation
-  # test that cookies are removed on logout
-  # test that when access_token is expired, a new access_token is sent
-  # test loging in, out and in again that jwts are different
-  # check that refresh token is also renewed when only refresh token is being sent to backend
+    # Logout with the new access_token and refresh_token
+    delete destroy_user_session_url, headers: {"Cookie" => "access_token=#{new_access_token}; refresh_token=#{refresh_token}"}
+    assert_response :success
+
+    # Ensure cookies are cleared
+    assert_nil response.cookies["access_token"]
+    assert_nil response.cookies["refresh_token"]
+  end
 
   private
 
