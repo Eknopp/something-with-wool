@@ -73,7 +73,7 @@ class Pattern < ApplicationRecord
 
   validates :craft_type, inclusion: {in: %w[knitting crochet weaving], message: "%{value} is not a valid craft type"}
   validates :overall_yarn_weight, inclusion: {in: %w[lace super_fine fine light], message: "%{value} is not a valid overal yarn weight"}
-  validates :sizes, inclusion: {in: %w[XS S M L XL XXL 3XL 4XL 5XL 6XL], message: "%{value} is not a valid size"}
+  validates :sizes, inclusion: {in: %w[XS S M L XL XXL 3XL 4XL 5XL 6XL], message: "at least one of the following sizes is invalid: %{value}"}
   validates :difficulty_rating, inclusion: {in: 1..5, message: "%{value} is not a valid difficulty rating"}
   validates :overall_rating, inclusion: {in: 1..5, message: "%{value} is not a valid overall rating"}
   validates :currency, inclusion: {in: VALID_CURRENCIES}

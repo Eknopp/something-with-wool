@@ -2,7 +2,7 @@ require "test_helper"
 
 class PatternsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
-  fixtures :users, :followers
+  fixtures :users, :users_yarns, :patterns, :yarns, :projects, :patterns_yarns
 
   setup do
     @user = users(:one)
@@ -69,6 +69,104 @@ class PatternsControllerTest < ActionDispatch::IntegrationTest
 
     pattern.reload
     assert_equal "Updated Pattern Name", pattern.name
+  end
+
+  test "should create pattern with one project" do
+    assert_difference("Pattern.count") do
+      post v1_patterns_url, params: {pattern: @pattern_params}
+    end
+    assert_response :success
+
+    pattern = Pattern.last
+    project = projects(:one)
+    project.update(pattern_id: pattern.id)
+
+    assert_equal pattern.id, project.pattern_id
+  end
+
+  test "should create pattern with two project" do
+    assert_difference("Pattern.count") do
+      post v1_patterns_url, params: {pattern: @pattern_params}
+    end
+    assert_response :success
+
+    pattern = Pattern.last
+    project_1 = projects(:one)
+    project_2 = projects(:two)
+    project_1.update(pattern_id: pattern.id)
+    project_2.update(pattern_id: pattern.id)
+
+    assert_equal pattern.id, project_1.pattern_id
+    assert_equal pattern.id, project_2.pattern_id
+  end
+
+  test "should create pattern with one yarn with one color" do
+    yarn = yarns(:one)
+    @pattern_params[:yarns] = [{yarn_id: yarn.id, color: yarn.colors.first}]
+
+    assert_difference("Pattern.count") do
+      post v1_patterns_url, params: {pattern: @pattern_params}
+    end
+    assert_response :success
+
+    pattern = Pattern.last
+    patterns_yarn = pattern.patterns_yarns.last
+
+    assert_equal yarn.id, patterns_yarn.yarn_id
+    assert_equal pattern.id, patterns_yarn.pattern_id
+    assert_equal yarn.colors.first, patterns_yarn.color
+  end
+
+  test "should create pattern with one yarn with two colors" do
+    yarn = yarns(:one)
+    @pattern_params[:yarns] = [
+      {yarn_id: yarn.id, color: yarn.colors[0]},
+      {yarn_id: yarn.id, color: yarn.colors[1]}
+    ]
+
+    assert_difference("Pattern.count") do
+      post v1_patterns_url, params: {pattern: @pattern_params}
+    end
+    assert_response :success
+
+    pattern = Pattern.last
+    patterns_yarns = pattern.patterns_yarns
+
+    patterns_yarns.each do |patterns_yarn|
+      assert_equal pattern.id, patterns_yarn.pattern_id
+    end
+
+    assert_equal 2, patterns_yarns.count
+    assert_equal yarn.id, patterns_yarns[0].yarn_id
+    assert_equal yarn.colors[0], patterns_yarns[0].color
+    assert_equal yarn.id, patterns_yarns[1].yarn_id
+    assert_equal yarn.colors[1], patterns_yarns[1].color
+    assert_not_equal yarn.colors[0], patterns_yarns[1].color
+    assert_not_equal yarn.colors[1], patterns_yarns[0].color
+  end
+
+  test "should create pattern with two yarns with one color" do
+    yarn_one = yarns(:one)
+    yarn_two = yarns(:two)
+    @pattern_params[:yarns] = [
+      {yarn_id: yarn_one.id, color: yarn_one.colors.first},
+      {yarn_id: yarn_two.id, color: yarn_two.colors.first}
+    ]
+
+    assert_difference("Pattern.count") do
+      post v1_patterns_url, params: {pattern: @pattern_params}
+    end
+    assert_response :success
+
+    pattern = Pattern.last
+    patterns_yarn = pattern.patterns_yarns
+
+    assert_equal yarn_one.id, patterns_yarn.first.yarn_id
+    assert_equal yarn_two.id, patterns_yarn.second.yarn_id
+
+    patterns_yarns.each do |patterns_yarn|
+      assert_equal pattern.id, patterns_yarn.pattern_id
+    end
   end
 
   # TODO:
