@@ -34,8 +34,22 @@
 #  fk_rails_...  (pattern_id => patterns.id)
 #  fk_rails_...  (user_id => users.id)
 #
-# one: {}
-# # column: value
-# #
-# two: {}
-# column: value
+one:
+  name: 'Sample Project One'
+  status: 'in_queue'
+  project_started: null
+  project_finished: null
+  pattern: one
+  user: one
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+
+two:
+  name: 'Sample Project Two'
+  status: 'finished'
+  project_started: <%= 1.month.ago %>
+  project_finished: <%= Time.now %>
+  pattern: two
+  user: two
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>

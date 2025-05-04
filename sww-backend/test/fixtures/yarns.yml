@@ -35,8 +35,44 @@
 #
 #  fk_rails_...  (user_id => users.id)
 #
-# one: {}
-# # column: value
-# #
-# two: {}
-# column: value
+one:
+  user_id: "<%= User.find_by(username: 'userone').id %>"
+  brand_name: 'Brand A'
+  colors:
+    - 'Red'
+    - 'Blue'
+  dye: 'Hand-dyed'
+  fibers: 'Wool'
+  gauge: '22 stitches per 10cm'
+  machine_wash: true
+  meterage: 200.0
+  name: 'Soft Wool'
+  notes: 'Perfect for sweaters'
+  origin: 'USA'
+  pictures_path: '/images/yarns/soft_wool.jpg'
+  texture: 'Smooth'
+  unit_weight: 50.0
+  weight: 'Fine'
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+
+two:
+  user_id: "<%= User.find_by(username: 'usertwo').id %>"
+  brand_name: 'Brand B'
+  colors:
+    - 'Green'
+    - 'Yellow'
+  dye: 'Machine-dyed'
+  fibers: 'Cotton'
+  gauge: '18 stitches per 10cm'
+  machine_wash: false
+  meterage: 150.0
+  name: 'Cozy Cotton'
+  notes: 'Great for summer projects'
+  origin: 'India'
+  pictures_path: '/images/yarns/cozy_cotton.jpg'
+  texture: 'Soft'
+  unit_weight: 100.0
+  weight: 'Light'
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
